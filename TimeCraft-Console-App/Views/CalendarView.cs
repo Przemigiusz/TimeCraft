@@ -11,7 +11,9 @@ namespace TimeCraft_Console_App.Views
             Console.Clear();
             Interface_Elements.Calendar.Calendar calendar = new Interface_Elements.Calendar.Calendar(months, dayAbbreviations, meetings, tasks);
             calendar.render();
-            return calendar.navigate();
+            CNavigationResult result = calendar.navigate();
+            Console.Clear();
+            return result;
         }
     }
 }

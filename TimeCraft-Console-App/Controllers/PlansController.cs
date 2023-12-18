@@ -38,7 +38,6 @@ namespace TimeCraft_Console_App.Controllers
                     this.displayCalendar();
                     break;
                 case Codes.SMExit:
-                    Console.Clear();
                     System.Environment.Exit(0);
                     break;
             }
@@ -56,7 +55,6 @@ namespace TimeCraft_Console_App.Controllers
                         this.displayPlansForDate(result.ChosenDate);
                         break;
                     case Codes.Exit:
-                        Console.Clear();
                         System.Environment.Exit(0);
                         break;
                 }

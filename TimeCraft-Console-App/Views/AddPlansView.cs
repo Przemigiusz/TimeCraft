@@ -9,7 +9,9 @@ namespace TimeCraft_Console_App.Views
         public IPlan displayNewPlanForm(DateTime chosenDate) {
             Console.Clear();
             NewPlanForm newPlanForm = new NewPlanForm();
-            return newPlanForm.render(chosenDate);
+            IPlan newPlan = newPlanForm.render(chosenDate);
+            Console.Clear();
+            return newPlan;
         }
     }
 }

@@ -11,7 +11,9 @@ namespace TimeCraft_Console_App.Views
         {
             Console.Clear();
             EditPlanForm editPlanForm = new EditPlanForm();
-            return editPlanForm.render(plan);
+            IPlan? editedPlan = editPlanForm.render(plan);
+            Console.Clear();
+            return editedPlan;
         }
     }
 }

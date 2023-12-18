@@ -11,7 +11,9 @@ namespace TimeCraft_Console_App.Views
             Console.Clear();
             DaySchedule daySchedule = new DaySchedule(meetings, tasks);
             daySchedule.render();
-            return daySchedule.navigate();
+            DSNavigationResult result = daySchedule.navigate();
+            Console.Clear();
+            return result;
         }    
     }
 }

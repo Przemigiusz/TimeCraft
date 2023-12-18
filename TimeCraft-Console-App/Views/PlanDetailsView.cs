@@ -92,6 +92,7 @@ namespace TimeCraft_Console_App.Views
                     keyInfo = Console.ReadKey(true);
                     if (keyInfo.Key == ConsoleKey.Escape)
                     {
+                        Console.Clear();
                         return;
                     }
                 }

@@ -34,6 +34,7 @@ internal class StartingMenuView
 
         await Task.WhenAll(listenerTask);
 
+        Console.Clear();
         return listenerTask.Result;
     }
 
