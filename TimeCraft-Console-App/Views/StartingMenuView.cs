@@ -23,6 +23,7 @@ internal class StartingMenuView
 
     public async Task<int> DisplayStartingMenu()
     {
+        Console.Clear();
         DisplayAppLabel();
 
         DisplayAppDescription();

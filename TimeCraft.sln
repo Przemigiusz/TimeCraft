@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeCraft-Console-App", "TimeCraft-Console-App\TimeCraft-Console-App.csproj", "{B3DA8936-CB32-4CC2-A5C3-12E73C316039}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeCraft-Console-App", "TimeCraft-Console-App\TimeCraft-Console-App.csproj", "{B3DA8936-CB32-4CC2-A5C3-12E73C316039}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeCraft-WPF-App", "TimeCraft-WPF-App\TimeCraft-WPF-App.csproj", "{EC8786F5-B2A3-4D13-B700-BD98142CDFAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B3DA8936-CB32-4CC2-A5C3-12E73C316039}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3DA8936-CB32-4CC2-A5C3-12E73C316039}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3DA8936-CB32-4CC2-A5C3-12E73C316039}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC8786F5-B2A3-4D13-B700-BD98142CDFAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC8786F5-B2A3-4D13-B700-BD98142CDFAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC8786F5-B2A3-4D13-B700-BD98142CDFAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC8786F5-B2A3-4D13-B700-BD98142CDFAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

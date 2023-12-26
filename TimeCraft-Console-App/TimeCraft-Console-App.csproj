@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>TimeCraft_Console_App</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -16,6 +16,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Spectre.Console" Version="0.47.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TimeCraft-WPF-App\TimeCraft-WPF-App.csproj" />
   </ItemGroup>
 
 </Project>
