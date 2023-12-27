@@ -3,12 +3,12 @@ using TimeCraft_WPF_App.ViewModels;
 
 namespace TimeCraft_WPF_App.Views
 {
-    public partial class CalendarView : UserControl
+    public partial class PlansView : UserControl
     {
-        public CalendarView(INavigation navigation)
+        public PlansView()
         {
             InitializeComponent();
-            DataContext = new CalendarViewModel(navigation);
+            DataContext = new PlansViewModel();
         }
     }
 }

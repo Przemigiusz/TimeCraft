@@ -11,27 +11,27 @@
         Title="MainWindow"
         Height="650"
         Width="1000"
+        MinHeight="650"
+        MinWidth="1000"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        Background="Transparent"
-        AllowsTransparency="True">
+        WindowStyle="SingleBorderWindow"
+        
+        AllowsTransparency="False"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewmodels:HomeTabViewModel}">
             <views:HomeTabView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:CalendarViewModel}">
-            <views:CalendarView/>
+        <DataTemplate DataType="{x:Type viewmodels:PlansViewModel}">
+            <views:PlansView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:AddMeetingViewModel}">
             <views:AddMeetingView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:AddTaskViewModel}">
             <views:AddTaskView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:ShowPlansViewModel}">
-            <views:ShowPlansView />
         </DataTemplate>
     </Window.Resources>
 
@@ -42,10 +42,16 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Border CornerRadius="10,0,0,10" Grid.Column="0" Background="{StaticResource PrimaryBackgroundColor}">
+            <Border Grid.Column="0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="{StaticResource PrimaryGradientColor}" Offset="0"/>
+                        <GradientStop Color="{StaticResource SecondaryGradientColor}" Offset="0.6"/>
+                    </LinearGradientBrush>
+                </Border.Background>
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Top">
-                        <TextBlock Text="TimeCraft" Foreground="{StaticResource PrimaryTextColor}" FontSize="25" FontFamily="Montserrat" FontWeight="Heavy" HorizontalAlignment="Center" Margin="0,25,0,50"/>
+                        <TextBlock Text="TimeCraft" Foreground="{StaticResource PrimaryTextColor}" FontSize="25" FontFamily="Montserrat" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,25,0,50"/>
 
                         <RadioButton Style="{StaticResource MenuButton}" Tag="{StaticResource PrimaryTextColor}" Command="{Binding ShowHomeViewCommand}" IsChecked="True">
                             <StackPanel Orientation="Horizontal">
@@ -57,7 +63,7 @@
                         <RadioButton Style="{StaticResource MenuButton}" Tag="{StaticResource PrimaryTextColor}" Command="{Binding ShowCalendarViewCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <fa:IconImage Icon="Calendar" Style="{StaticResource MenuButtonIcon}"/>
-                                <TextBlock Text="Calendar" Style="{StaticResource MenuButtonText}"/>
+                                <TextBlock Text="Plans" Style="{StaticResource MenuButtonText}"/>
                             </StackPanel>
                         </RadioButton>
 
@@ -85,10 +91,8 @@
 
                 </DockPanel>
             </Border>
-            <Border CornerRadius="0,10,10,0" Grid.Column="1" Padding="10,30,10,10" Background="{StaticResource PrimaryBackgroundColor}">
-                <Border Background="{StaticResource SecondaryBackgroundColor}">
-                    <ContentControl Content="{Binding CurrentTab}" />
-                </Border>
+            <Border Grid.Column="1" Padding="0,0,0,30" Background="{StaticResource PrimaryBackgroundColor}">
+                <ContentControl Content="{Binding CurrentTab}" />
             </Border>
         </Grid>
     </Border>

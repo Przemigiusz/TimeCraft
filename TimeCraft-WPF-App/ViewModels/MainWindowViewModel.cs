@@ -3,7 +3,7 @@ using TimeCraft_WPF_App.Core;
 
 namespace TimeCraft_WPF_App.ViewModels
 {
-    class MainWindowViewModel : ViewModelBase, INavigation
+    class MainWindowViewModel : ViewModelBase
     {
         private ViewModelBase? _currentTab;
 
@@ -43,15 +43,17 @@ namespace TimeCraft_WPF_App.ViewModels
 
         private void ExecuteShowCalendarView(object? parameter)
         {
-            CurrentTab = new CalendarViewModel(this);
+            CurrentTab = new PlansViewModel();
         }
 
         private void ExecuteAddMeetingView(object? parameter)
         {
+            CurrentTab = new AddMeetingViewModel();
         }
 
         private void ExecuteAddTaskView(object? parameter)
         {
+            CurrentTab = new AddTaskViewModel();
         }
 
         private void ExecuteExit(object? parameter)
@@ -62,11 +64,6 @@ namespace TimeCraft_WPF_App.ViewModels
         private bool CanExecuteCommand(object? parameter)
         {
             return true;
-        }
-
-        public void NavigateTo(ViewModelBase viewModel)
-        {
-            CurrentTab = viewModel;
         }
     }
 }

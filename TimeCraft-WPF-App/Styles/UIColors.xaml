@@ -2,18 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
-    <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#212529"/>
-    <SolidColorBrush x:Key="SecondaryBackgroundColor" Color="#2e3338"/>
-
-    <SolidColorBrush x:Key="PrimaryHighlightColor" Color="#495057"/>
-    <SolidColorBrush x:Key="SecondaryHighlightColor" Color="#6c757d"/>
-
-    <SolidColorBrush x:Key="PrimaryBorderHighlightColor" Color="#FFD60A"/>
-    <SolidColorBrush x:Key="SecondaryBorderHighlightColor" Color="#FFC300"/>
-
+    <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SecondaryBackgroundColor" Color="#e9ecef"/>
+    <SolidColorBrush x:Key="TertiaryBackgroundColor" Color="#ced4da"/>
 
     <SolidColorBrush x:Key="PrimaryTextColor" Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="SecondaryTextColor" Color="#adb5bd"/>
-    <SolidColorBrush x:Key="TertiaryTextColor" Color="#242423"/>
+    <SolidColorBrush x:Key="SecondaryTextColor" Color="#212529"/>
+
+    <Color x:Key="PrimaryGradientColor">#BB084B</Color>
+    <Color x:Key="SecondaryGradientColor">#6D0347</Color>
 
 </ResourceDictionary>
