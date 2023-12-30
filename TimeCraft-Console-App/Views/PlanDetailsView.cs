@@ -1,5 +1,5 @@
 ﻿using Spectre.Console;
-using TimeCraft_Console_App.Models;
+using SharedLibrary.Models;
 
 namespace TimeCraft_Console_App.Views
 {

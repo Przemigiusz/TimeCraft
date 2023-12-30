@@ -1,7 +1,5 @@
-﻿using Spectre.Console;
-using TimeCraft_Console_App.Interface_Elements;
-using TimeCraft_Console_App.Interface_Elements.Forms;
-using TimeCraft_Console_App.Models;
+﻿using TimeCraft_Console_App.Interface_Elements.Forms;
+using SharedLibrary.Models;
 
 namespace TimeCraft_Console_App.Views
 {

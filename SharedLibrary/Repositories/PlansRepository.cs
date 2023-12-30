@@ -1,20 +1,42 @@
 ﻿using System.Globalization;
-using TimeCraft_Console_App.Models;
+using SharedLibrary.Models;
 
-namespace TimeCraft_Console_App.Repositories
+namespace SharedLibrary.Repositories
 {
-    internal class PlansRepository
+    public class PlansRepository
     {
+        private static PlansRepository? instance;
+
+        private List<string> kindsOfMeetings;
+        private List<string> priorities;
         private List<Models.Task> tasks;
         private List<Meeting> meetings;
+
+        public List<string> KindsOfMeetings { get { return kindsOfMeetings; } }
+        public List<string> Priorities { get { return priorities; } }
         public List<Meeting> Meetings { get { return meetings; } }
         public List<Models.Task> Tasks { get { return tasks; } }
 
-        public PlansRepository() {
+        public static PlansRepository Instance
+        {
+            get
+            {
+                instance ??= new PlansRepository();
+                return instance;
+            }
+        }
+
+        private PlansRepository() {
+            this.kindsOfMeetings = new List<string>();
+            this.priorities = new List<string>();
+
             this.tasks = new List<Models.Task>();
             this.meetings = new List<Meeting>();
+
             this.initializePlans();
+            this.initializePlansComponents();
         }
+
         private void initializePlans() {
             Meeting meeting1 = new Meeting("Conference", "Testing", "13/11/2023", "12:00", "13:00");
             Meeting meeting2 = new Meeting("Team Meeting", "Debugging", "13/11/2023", "14:00", "15:00");
@@ -61,6 +83,17 @@ namespace TimeCraft_Console_App.Repositories
             this.meetings.Add(meeting8);
             this.meetings.Add(meeting9);
         }
+
+        private void initializePlansComponents() {
+            this.kindsOfMeetings.Add("Conference");
+            this.kindsOfMeetings.Add("Team Meeting");
+            this.kindsOfMeetings.Add("Client Meeting");
+
+            this.priorities.Add("Low");
+            this.priorities.Add("Normal");
+            this.priorities.Add("High");
+        }
+
         public void addTask(Models.Task task) {
             this.tasks.Add(task);
         }

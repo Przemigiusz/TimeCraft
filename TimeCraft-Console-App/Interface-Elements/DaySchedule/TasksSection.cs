@@ -1,19 +1,19 @@
 ﻿using Spectre.Console;
 using TimeCraft_Console_App.Messages;
-using TimeCraft_Console_App.Models;
+using SharedLibrary.Models;
 
 namespace TimeCraft_Console_App.Interface_Elements.PlansTable
 {
     internal class TasksSection : PlansSection
     {
         private List<TaskItem> rows;
-        public TasksSection(string columnHeader, List<Models.Task> tasks) : base(columnHeader) {
+        public TasksSection(string columnHeader, List<SharedLibrary.Models.Task> tasks) : base(columnHeader) {
             this.rows = new List<TaskItem>();
             this.initializeRows(tasks);
             this.itemsPerPage = 3;
             this.currentPage = 1;
         }
-        private void initializeRows(List<Models.Task> tasks) {
+        private void initializeRows(List<SharedLibrary.Models.Task> tasks) {
             for (int i = 0; i < tasks.Count; ++i) {
                 this.rows.Add(new TaskItem(tasks[i]));
             }
@@ -89,7 +89,7 @@ namespace TimeCraft_Console_App.Interface_Elements.PlansTable
                 {
                     if (i < endIndex - startIndex)
                     {
-                        Models.Task task = this.rows[i + startIndex].Task;
+                        SharedLibrary.Models.Task task = this.rows[i + startIndex].Task;
                         string taskNum = $"{i + 1}. ";
                         string taskName = $"{task.TaskName}";
                         AnsiConsole.Markup($"[bold yellow]{taskNum}[/]");

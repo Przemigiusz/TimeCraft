@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:validators="clr-namespace:TimeCraft_WPF_App.Validators">
 
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.RowDefinitions>
@@ -30,7 +31,17 @@
                 FontWeight="Medium"
                 materialDesign:HintAssist.HelperText="Select a date for Your appointment"
                 materialDesign:HintAssist.Hint="Pick Date"
-                Style="{StaticResource MaterialDesignFilledDatePicker}" />
+                Style="{StaticResource MaterialDesignFilledDatePicker}">
+                <DatePicker.SelectedDate>
+                    <Binding
+                        Path="SelectedDate"
+                        UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:NotEmptyValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </DatePicker.SelectedDate>
+            </DatePicker>
 
             <ComboBox
                 Grid.Row="2"
@@ -39,16 +50,20 @@
                 materialDesign:HintAssist.HelperText="Choose Your meeting type"
                 Width="300"
                 FontSize="15"
-                FontWeight="Medium">
-                <ComboBoxItem
-                    Content="Android" />
-                <ComboBoxItem
-                    Content="iOS" />
-                <ComboBoxItem
-                    Content="Linux" />
-                <ComboBoxItem
-                    Content="Windows" />
+                FontWeight="Medium"
+                ItemsSource="{Binding KindsOfMeetings}">
+                <ComboBox.SelectedItem>
+                    <Binding
+                        Mode="TwoWay"
+                        Path="SelectedType"
+                        UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:NotEmptyValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.SelectedItem>
             </ComboBox>
+
 
             <TextBox
                 Grid.Row="3"
@@ -59,7 +74,17 @@
                 Width="300"
                 FontSize="15"
                 FontWeight="Medium"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding
+                        Path="Topic"
+                        UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:NotEmptyValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
             <materialDesign:TimePicker
                 Grid.Row="4"
@@ -70,7 +95,18 @@
                 Width="300"
                 FontSize="15"
                 FontWeight="Medium"
-                Is24Hours="True"/>
+                Is24Hours="True"
+                SelectedTime="{Binding StartTime, UpdateSourceTrigger=PropertyChanged}">
+                <materialDesign:TimePicker.Text>
+                    <Binding
+                        Path="StartTime"
+                        UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:NotEmptyValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </materialDesign:TimePicker.Text>
+            </materialDesign:TimePicker>
 
             <materialDesign:TimePicker
                 Grid.Row="5"
@@ -81,7 +117,18 @@
                 Width="300"
                 FontSize="15"
                 FontWeight="Medium"
-                Is24Hours="True"/>
+                Is24Hours="True"
+                SelectedTime="{Binding EndTime, UpdateSourceTrigger=PropertyChanged}">
+                <materialDesign:TimePicker.Text>
+                    <Binding
+                        Path="EndTime"
+                        UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:NotEmptyValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </materialDesign:TimePicker.Text>
+            </materialDesign:TimePicker>
 
             <Button
                 Width="200"
@@ -91,7 +138,8 @@
                 Foreground="{StaticResource PrimaryTextColor}"
                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                 Style="{StaticResource MaterialDesignRaisedButton}"
-                ToolTip="Resource name: MaterialDesignRaisedButton" />
+                ToolTip="Resource name: MaterialDesignRaisedButton"
+                Command="{Binding AddMeetingCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

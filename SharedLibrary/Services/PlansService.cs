@@ -1,15 +1,16 @@
-﻿using TimeCraft_Console_App.Repositories;
+﻿using SharedLibrary.Repositories;
 
-namespace TimeCraft_Console_App.Services
+namespace SharedLibrary.Services
 {
-    internal class PlansService
+    public class PlansService
     {
         private static PlansService? instance;
         private PlansRepository plansRepository;
         public PlansRepository PlansRepository { get { return plansRepository; } }
+
         private PlansService()
         {
-            this.plansRepository = new PlansRepository();
+            this.plansRepository = PlansRepository.Instance;
         }
         public static PlansService Instance
         {

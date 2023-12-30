@@ -26,6 +26,11 @@ namespace TimeCraft_WPF_App.ViewModels
         public ICommand AddTaskViewCommand { get; }
         public ICommand ExitCommand { get; }
 
+        public ICommand ShowLoginFormCommand { get; }
+        public ICommand ShowRegistrationFormCommand { get; }
+
+        private bool isUserLoggedIn;
+
         public MainWindowViewModel()
         {
             CurrentTab = new HomeTabViewModel();
@@ -34,6 +39,42 @@ namespace TimeCraft_WPF_App.ViewModels
             AddMeetingViewCommand = new RelayCommand(ExecuteAddMeetingView, CanExecuteCommand);
             AddTaskViewCommand = new RelayCommand(ExecuteAddTaskView, CanExecuteCommand);
             ExitCommand = new RelayCommand(ExecuteExit, CanExecuteCommand);
+
+            ShowLoginFormCommand = new RelayCommand(ExecuteShowLoginForm, CanExecuteShowLoginForm);
+            ShowRegistrationFormCommand = new RelayCommand(ExecuteShowRegistrationForm, CanExecuteShowRegistrationForm);
+        }
+
+        public bool IsUserLoggedIn
+        {
+            get { return isUserLoggedIn; }
+            set
+            {
+                if (isUserLoggedIn != value)
+                {
+                    isUserLoggedIn = value;
+                    OnPropertyChanged(nameof(IsUserLoggedIn));
+                }
+            }
+        }
+
+        private void ExecuteShowLoginForm(object? parameter)
+        {
+            CurrentTab = new LoginViewModel();
+        }
+
+        private bool CanExecuteShowLoginForm(object? parameter)
+        {
+            return !IsUserLoggedIn;
+        }
+
+        private void ExecuteShowRegistrationForm(object? parameter)
+        {
+            CurrentTab = new RegistrationViewModel();
+        }
+
+        private bool CanExecuteShowRegistrationForm(object? parameter)
+        {
+            return !IsUserLoggedIn;
         }
 
         private void ExecuteShowHomeView(object? parameter)

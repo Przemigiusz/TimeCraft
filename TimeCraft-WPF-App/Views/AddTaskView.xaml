@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:validators="clr-namespace:TimeCraft_WPF_App.Validators">
+    
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -25,18 +27,38 @@
                 FontWeight="Medium"
                 materialDesign:HintAssist.HelperText="Select a date for Your task"
                 materialDesign:HintAssist.Hint="Pick Date"
-                Style="{StaticResource MaterialDesignFilledDatePicker}" />
+                Style="{StaticResource MaterialDesignFilledDatePicker}">
+                <DatePicker.SelectedDate>
+                    <Binding
+                        Path="SelectedDate"
+                        UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:NotEmptyValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </DatePicker.SelectedDate>
+            </DatePicker>
 
             <TextBox
                 Grid.Row="2"
                 Margin="0, 20"
                 VerticalAlignment="Center"
-                materialDesign:HintAssist.Hint="Topic"
-                materialDesign:HintAssist.HelperText="Enter your meeting topic"
+                materialDesign:HintAssist.Hint="Name"
+                materialDesign:HintAssist.HelperText="Enter your task name"
                 Width="300"
                 FontSize="15"
                 FontWeight="Medium"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding
+                        Path="Name"
+                        UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:NotEmptyValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
             <ComboBox
                 Grid.Row="3"
@@ -45,13 +67,18 @@
                 materialDesign:HintAssist.HelperText="Choose priority of Your task"
                 Width="300"
                 FontSize="15"
-                FontWeight="Medium">
-                <ComboBoxItem
-                    Content="Low" />
-                <ComboBoxItem
-                    Content="Normal" />
-                <ComboBoxItem
-                    Content="High" />
+                FontWeight="Medium"
+                ItemsSource="{Binding Priorities}">
+                <ComboBox.SelectedItem>
+                    <Binding
+                        Mode="TwoWay"
+                        Path="SelectedPriority"
+                        UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:NotEmptyValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.SelectedItem>
             </ComboBox>
 
             <TextBox
@@ -67,17 +94,28 @@
                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
                 TextWrapping="Wrap"
-                VerticalScrollBarVisibility="Auto" />
+                VerticalScrollBarVisibility="Auto">
+                <TextBox.Text>
+                    <Binding
+                        Path="Description"
+                        UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:NotEmptyValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
             <Button
                 Width="200"
                 Margin="0, 30"
-                Content="Add Meeting"
+                Content="Add Task"
                 FontWeight="Medium"
                 Foreground="{StaticResource PrimaryTextColor}"
                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                 Style="{StaticResource MaterialDesignRaisedButton}"
-                ToolTip="Resource name: MaterialDesignRaisedButton" />
+                ToolTip="Resource name: MaterialDesignRaisedButton"
+                Command="{Binding AddTaskCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -2,7 +2,7 @@
 using System.Globalization;
 using TimeCraft_Console_App.Interface_Elements.Forms.FormFields;
 using TimeCraft_Console_App.Messages;
-using TimeCraft_Console_App.Models;
+using SharedLibrary.Models;
 
 namespace TimeCraft_Console_App.Interface_Elements
 {
@@ -31,7 +31,7 @@ namespace TimeCraft_Console_App.Interface_Elements
             string whatToDoMenuMenuHeader = "What You want to do?";
             this.whatToDoMenu = new WhatToDoMenuC(whatToDoMenuMenuHeader, whatToDoMenuOptions);
         }
-        public void initializeTableCells(List<DateTime> tableCells, List<Meeting> meetings, List<Models.Task> tasks) {
+        public void initializeTableCells(List<DateTime> tableCells, List<Meeting> meetings, List<SharedLibrary.Models.Task> tasks) {
             bool isScheduled;
             for (int i = 0; i < tableCells.Count; ++i) {
                 isScheduled = false;
@@ -46,7 +46,7 @@ namespace TimeCraft_Console_App.Interface_Elements
                 }
                 if (isScheduled == false)
                 {
-                    foreach (Models.Task task in tasks)
+                    foreach (SharedLibrary.Models.Task task in tasks)
                     {
                         if (task.TaskDate == formattedDate)
                         {

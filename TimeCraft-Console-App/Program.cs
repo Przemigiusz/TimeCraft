@@ -1,8 +1,10 @@
-﻿using System.Text;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System.Text;
 using TimeCraft_Console_App.Controllers;
 using TimeCraft_Console_App.Interface_Elements;
 using TimeCraft_Console_App.Messages;
 using TimeCraft_WPF_App;
+
 class Program
 {
     [STAThread]

@@ -33,6 +33,12 @@
         <DataTemplate DataType="{x:Type viewmodels:AddTaskViewModel}">
             <views:AddTaskView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
+            <views:LoginView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:RegistrationViewModel}">
+            <views:RegistrationView />
+        </DataTemplate>
     </Window.Resources>
 
     <Border CornerRadius="20">

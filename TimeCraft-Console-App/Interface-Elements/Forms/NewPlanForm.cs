@@ -1,8 +1,7 @@
 ﻿using Spectre.Console;
 using System.Globalization;
-using System.Numerics;
 using TimeCraft_Console_App.Interface_Elements.Forms.FormFields;
-using TimeCraft_Console_App.Models;
+using SharedLibrary.Models;
 
 namespace TimeCraft_Console_App.Interface_Elements
 {
@@ -64,7 +63,7 @@ namespace TimeCraft_Console_App.Interface_Elements
                 
             }
             else {
-                Models.Task task = new Models.Task(this.formFields[1].getAnswer(), this.formFields[2].getAnswer(), chosenDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), this.formFields[0].getAnswer(), false);
+                SharedLibrary.Models.Task task = new SharedLibrary.Models.Task(this.formFields[1].getAnswer(), this.formFields[2].getAnswer(), chosenDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), this.formFields[0].getAnswer(), false);
                 AnsiConsole.MarkupLine("[bold white]Task added[/] [bold mediumspringgreen]successfully![/]\n[bold white]Press[/] [bold mediumspringgreen]Enter[/] [bold white]to[/] [bold mediumspringgreen]Continue[/]");
                 while (true)
                 {

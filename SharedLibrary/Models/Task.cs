@@ -1,6 +1,6 @@
-﻿namespace TimeCraft_Console_App.Models
+﻿namespace SharedLibrary.Models
 {
-    internal class Task : IPlan
+    public class Task : IPlan
     {
         private static int currentTaskId = 0;
         private int taskId = 0;

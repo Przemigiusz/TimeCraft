@@ -1,7 +1,7 @@
 ﻿using Spectre.Console;
 using TimeCraft_Console_App.Interface_Elements.Forms.FormFields;
 using TimeCraft_Console_App.Messages;
-using TimeCraft_Console_App.Models;
+using SharedLibrary.Models;
 
 namespace TimeCraft_Console_App.Interface_Elements.Calendar
 {
@@ -14,14 +14,14 @@ namespace TimeCraft_Console_App.Interface_Elements.Calendar
         private int leftMargin;
         private DateTime chosenDate;
         private List<Meeting> meetings;
-        private List<Models.Task> tasks;
+        private List<SharedLibrary.Models.Task> tasks;
         private Interface_Elements.Calendar.ExitMenuC exitMenu;
         private int endYPos;
 
         private string calendarAsciiArt = "  ___        _                _           \r\n / __| __ _ | | ___  _ _   __| | __ _  _ _ \r\n| (__ / _` || |/ -_)| ' \\ / _` |/ _` || '_|\r\n \\___|\\__,_||_|\\___||_||_|\\__,_|\\__,_||_|  ";
         
         private List<string> dayAbbreviations;
-        public Calendar(List<string> months, List<string> dayAbbreviations, List<Meeting> meetings, List<Models.Task> tasks) {
+        public Calendar(List<string> months, List<string> dayAbbreviations, List<Meeting> meetings, List<SharedLibrary.Models.Task> tasks) {
             this.currentElementId = 0;
             this.elements = new List<Element>();
             this.meetings = meetings;

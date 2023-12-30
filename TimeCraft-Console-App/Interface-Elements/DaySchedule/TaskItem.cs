@@ -4,9 +4,9 @@ namespace TimeCraft_Console_App.Interface_Elements.PlansTable
 {
     internal class TaskItem : Element
     {
-        private Models.Task task;
-        public Models.Task Task { get { return task; } }
-        public TaskItem(Models.Task task)
+        private SharedLibrary.Models.Task task;
+        public SharedLibrary.Models.Task Task { get { return task; } }
+        public TaskItem(SharedLibrary.Models.Task task)
         {
             this.task = task;
         }

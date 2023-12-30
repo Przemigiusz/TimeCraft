@@ -1,7 +1,6 @@
 ﻿using Spectre.Console;
-using System.Globalization;
 using TimeCraft_Console_App.Interface_Elements.Forms.FormFields;
-using TimeCraft_Console_App.Models;
+using SharedLibrary.Models;
 
 namespace TimeCraft_Console_App.Interface_Elements.Forms
 {
@@ -164,22 +163,22 @@ namespace TimeCraft_Console_App.Interface_Elements.Forms
                 else
                 {
                     string taskName = string.IsNullOrEmpty(this.formFields[1].getAnswer())
-                        ? ((Models.Task)plan).TaskName
+                        ? ((SharedLibrary.Models.Task)plan).TaskName
                         : this.formFields[1].getAnswer();
 
                     string taskDescription = string.IsNullOrEmpty(this.formFields[2].getAnswer())
-                        ? ((Models.Task)plan).TaskDescription
+                        ? ((SharedLibrary.Models.Task)plan).TaskDescription
                         : this.formFields[2].getAnswer();
 
                     string taskPriority = string.IsNullOrEmpty(this.formFields[0].getAnswer())
-                        ? ((Models.Task)plan).TaskPriority
+                        ? ((SharedLibrary.Models.Task)plan).TaskPriority
                         : this.formFields[0].getAnswer();
 
                     bool isCompleted = this.formFields[3].getAnswer() == "Done" ? true : false;
 
 
-                    Models.Task task = new Models.Task(taskName, taskDescription, ((Models.Task)plan).TaskDate, taskPriority, isCompleted);
-                    task.TaskId = ((Models.Task)plan).TaskId;
+                    SharedLibrary.Models.Task task = new SharedLibrary.Models.Task(taskName, taskDescription, ((SharedLibrary.Models.Task)plan).TaskDate, taskPriority, isCompleted);
+                    task.TaskId = ((SharedLibrary.Models.Task)plan).TaskId;
                     AnsiConsole.MarkupLine("[bold white]Task updated[/] [bold mediumspringgreen]successfully![/]\n[bold white]Press[/] [bold mediumspringgreen]Enter[/] [bold white]to[/] [bold mediumspringgreen]Continue[/]");
                     while (true)
                     {
@@ -201,10 +200,10 @@ namespace TimeCraft_Console_App.Interface_Elements.Forms
                 switch (fieldName)
                 {
                     case "Priority":
-                        selectedOptionName = ((Models.Task)plan)?.TaskPriority ?? "";
+                        selectedOptionName = ((SharedLibrary.Models.Task)plan)?.TaskPriority ?? "";
                         break;
                     case "Status":
-                        selectedOptionName = ((Models.Task)plan)?.IsCompleted == true ? "Done" : "Not Done";
+                        selectedOptionName = ((SharedLibrary.Models.Task)plan)?.IsCompleted == true ? "Done" : "Not Done";
                         break;
                     case "What kind of meeting is it?":
                         selectedOptionName = ((Meeting)plan)?.KindOfMeeting ?? "";

@@ -1,4 +1,7 @@
-﻿using System.Windows.Threading;
+﻿using System;
+using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace TimeCraft_WPF_App.ViewModels
 {
@@ -7,6 +10,7 @@ namespace TimeCraft_WPF_App.ViewModels
         private string? _greetingP1;
         private string? _greetingP2;
         private string? _currentTime;
+        private Timer _timer;
 
         public string? GreetingP1
         {
@@ -51,15 +55,16 @@ namespace TimeCraft_WPF_App.ViewModels
         {
             GreetingP1 = "Hello,";
             GreetingP2 = "What's Up Today?";
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += Timer_Tick;
-            timer.Start();
+
+            _timer = new Timer(TimerCallback, null, 0, 1000);
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void TimerCallback(object? state)
         {
-            CurrentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                CurrentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            });
         }
     }
 }

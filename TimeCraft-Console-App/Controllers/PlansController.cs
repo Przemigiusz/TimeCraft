@@ -1,5 +1,6 @@
 ﻿using TimeCraft_Console_App.Messages;
-using TimeCraft_Console_App.Models;
+using SharedLibrary.Models;
+using SharedLibrary.Services;
 using TimeCraft_Console_App.Services;
 using TimeCraft_Console_App.Views;
 
@@ -67,15 +68,15 @@ namespace TimeCraft_Console_App.Controllers
             {
                 this.plansService.PlansRepository.addMeeting((Meeting)result);
             }
-            else if (result is Models.Task) {
-                this.plansService.PlansRepository.addTask((Models.Task)result);
+            else if (result is SharedLibrary.Models.Task) {
+                this.plansService.PlansRepository.addTask((SharedLibrary.Models.Task)result);
             }
         }
         private void displayPlansForDate(DateTime chosendate)
         {
             DSNavigationResult result;
             List <Meeting> meetings = this.plansService.PlansRepository.getMeetings(chosendate);
-            List<Models.Task> tasks = this.plansService.PlansRepository.getTasks(chosendate);
+            List<SharedLibrary.Models.Task> tasks = this.plansService.PlansRepository.getTasks(chosendate);
             while (true)
             {
                 result = this.plansView.displayPlans(meetings, tasks);
@@ -94,9 +95,9 @@ namespace TimeCraft_Console_App.Controllers
                                 this.plansService.PlansRepository.updateMeeting((Meeting)plan);
                                 meetings = this.plansService.PlansRepository.getMeetings(chosendate);
                             }
-                            else if (result.TypeIndicator == typeof(Models.Task).Name)
+                            else if (result.TypeIndicator == typeof(SharedLibrary.Models.Task).Name)
                             {
-                                this.plansService.PlansRepository.updateTask((Models.Task)plan);
+                                this.plansService.PlansRepository.updateTask((SharedLibrary.Models.Task)plan);
                                 tasks = this.plansService.PlansRepository.getTasks(chosendate);
                             }
                         }

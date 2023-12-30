@@ -1,7 +1,7 @@
 ﻿using TimeCraft_Console_App.Interface_Elements.DaySchedule;
 using TimeCraft_Console_App.Interface_Elements.Forms.FormFields;
 using TimeCraft_Console_App.Messages;
-using TimeCraft_Console_App.Models;
+using SharedLibrary.Models;
 
 namespace TimeCraft_Console_App.Interface_Elements.PlansTable
 {
@@ -12,7 +12,7 @@ namespace TimeCraft_Console_App.Interface_Elements.PlansTable
         protected WhatToDoMenuDS whatToDoMenu;
         private int endYPos;
 
-        public DaySchedule(List<Meeting> meetings, List<Models.Task> tasks)
+        public DaySchedule(List<Meeting> meetings, List<SharedLibrary.Models.Task> tasks)
         {
             this.elements = new List<Element>();
             PlansSection meetingsSection = new MeetingsSection("Meetings", meetings);
