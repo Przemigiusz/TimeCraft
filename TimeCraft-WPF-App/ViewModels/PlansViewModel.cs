@@ -22,19 +22,35 @@ namespace TimeCraft_WPF_App.ViewModels
         private ICollectionView? meetingsView;
         private ICollectionView? tasksView;
 
+        private IPlan? activityToDelete;
+
         private string? selectedSortType;
         private string? selectedPriority;
 
-        public ICommand DeleteMeetingCommand { get; set; }
-        public ICommand DeleteTaskCommand { get; set; }
+        private bool isDialogOpen;
+        public bool IsDialogOpen
+        {
+            get { return isDialogOpen; }
+            set
+            {
+                if (isDialogOpen != value)
+                {
+                    isDialogOpen = value;
+                    OnPropertyChanged(nameof(IsDialogOpen));
+                }
+            }
+        }
+
+        public ICommand SaveActivityToDeleteCommand { get; set; }
+        public ICommand DeleteActivityCommand { get; set; }
 
         public PlansViewModel()
         {
             plansService = PlansService.Instance;
-            DeleteMeetingCommand = new RelayCommand(DeleteMeetingCommandExecute, CanDeleteCommandExecute);
-            DeleteTaskCommand = new RelayCommand(DeleteTaskCommandExecute, CanDeleteCommandExecute);
+            IsDialogOpen = false;
 
-            
+            SaveActivityToDeleteCommand = new RelayCommand(SaveActivityToDeleteCommandExecute, CanSaveActivityToDeleteCommandExecute);
+            DeleteActivityCommand = new RelayCommand(DeleteActivityCommandExecute, CanDeleteActivityCommandExecute);
 
             this.kindsOfMeetings = new ObservableCollection<string>(plansService.PlansRepository.KindsOfMeetings);
             this.priorities = new ObservableCollection<string>(plansService.PlansRepository.Priorities);
@@ -43,23 +59,38 @@ namespace TimeCraft_WPF_App.ViewModels
             LoadPlans();
         }
 
-        private void DeleteMeetingCommandExecute(object? parameter)
+        private void DeleteActivityCommandExecute(object? parameter)
         {
-            if (parameter is Meeting meeting)
+            if (activityToDelete is Meeting meeting)
             {
                 Meetings?.Remove(meeting);
+                plansService.PlansRepository.deleteMeeting(meeting.MeetingId);
             }
-        }
 
-        private void DeleteTaskCommandExecute(object? parameter)
-        {
-            if (parameter is SharedLibrary.Models.Task task)
+            if (activityToDelete is SharedLibrary.Models.Task task)
             {
                 Tasks?.Remove(task);
+                plansService.PlansRepository.deleteTask(task.TaskId);
+            }
+
+            IsDialogOpen = false;
+        }
+
+        private bool CanDeleteActivityCommandExecute(object? parameter)
+        {
+            return activityToDelete != null;
+        }
+
+        private void SaveActivityToDeleteCommandExecute(object? parameter)
+        {
+            if (parameter is IPlan plan)
+            {
+                IsDialogOpen = true;
+                activityToDelete = plan;
             }
         }
 
-        private bool CanDeleteCommandExecute(object? parameter)
+        private bool CanSaveActivityToDeleteCommandExecute(object? parameter)
         {
             return parameter != null;
         }

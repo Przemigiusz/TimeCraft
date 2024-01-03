@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Windows;
-using System.Windows.Threading;
+﻿using System.Windows;
 
 namespace TimeCraft_WPF_App.ViewModels
 {
@@ -61,10 +58,14 @@ namespace TimeCraft_WPF_App.ViewModels
 
         private void TimerCallback(object? state)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            if (Application.Current != null)
             {
-                CurrentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            });
+                Application.Current.Dispatcher?.Invoke(() =>
+                {
+                    CurrentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                });
+            }
         }
+
     }
 }

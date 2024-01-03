@@ -3,7 +3,6 @@ using SharedLibrary.Services;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Input;
-using System.Xml.Linq;
 using TimeCraft_WPF_App.Core;
 
 namespace TimeCraft_WPF_App.ViewModels
@@ -22,20 +21,15 @@ namespace TimeCraft_WPF_App.ViewModels
 
         public ICommand AddMeetingCommand { get; set; }
 
+        private bool shouldValidateAddMeetingForm;
+
         public AddMeetingViewModel()
         {
+            shouldValidateAddMeetingForm = false;
+
             plansService = PlansService.Instance;
             kindsOfMeetings = new ObservableCollection<string>(plansService.PlansRepository.KindsOfMeetings);
             AddMeetingCommand = new RelayCommand(_ => AddMeeting(), _ => CanAddMeeting());
-        }
-
-        private bool CanAddMeeting()
-        {
-            return SelectedDate.HasValue
-                && !string.IsNullOrEmpty(SelectedType)
-                && !string.IsNullOrEmpty(Topic)
-                && StartTime.HasValue
-                && EndTime.HasValue;
         }
 
         public DateTime? SelectedDate
@@ -108,16 +102,28 @@ namespace TimeCraft_WPF_App.ViewModels
             get { return kindsOfMeetings; }
         }
 
+        private bool CanAddMeeting()
+        {
+            ValidateAddMeetingForm();
+            return !HasErrors;
+        }
+
         private void AddMeeting()
         {
-            if (SelectedDate.HasValue && !string.IsNullOrEmpty(SelectedType) && !string.IsNullOrEmpty(Topic) && StartTime.HasValue && EndTime.HasValue)
-            {
-                string formattedDate = SelectedDate.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
-                string formattedStartTime = StartTime.Value.ToString("HH:mm", CultureInfo.InvariantCulture);
-                string formattedEndTime = EndTime.Value.ToString("HH:mm", CultureInfo.InvariantCulture);
+            shouldValidateAddMeetingForm = true;
+            AddedSuccessfullyMessage = null;
 
-                Meeting newMeeting = new Meeting(SelectedType, Topic, formattedDate, formattedStartTime, formattedEndTime);
+            if (CanAddMeeting())
+            {
+                string formattedDate = SelectedDate!.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                string formattedStartTime = StartTime!.Value.ToString("HH:mm", CultureInfo.InvariantCulture);
+                string formattedEndTime = EndTime!.Value.ToString("HH:mm", CultureInfo.InvariantCulture);
+
+                Meeting newMeeting = new Meeting(SelectedType!, Topic!, formattedDate, formattedStartTime, formattedEndTime);
                 plansService.PlansRepository.addMeeting(newMeeting);
+
+                shouldValidateAddMeetingForm = false;
+                AddedSuccessfullyMessage = "The meeting was added successfully.";
 
                 ResetForm();
             }
@@ -131,5 +137,67 @@ namespace TimeCraft_WPF_App.ViewModels
             StartTime = null;
             EndTime = null;
         }
-}
+
+        private void ClearFormErrors()
+        {
+            ClearErrors(nameof(SelectedDate));
+            ClearErrors(nameof(SelectedType));
+            ClearErrors(nameof(Topic));
+            ClearErrors(nameof(StartTime));
+            ClearErrors(nameof(EndTime));
+        }
+
+        private void ValidateAddMeetingForm()
+        {
+            ClearFormErrors();
+
+            if (shouldValidateAddMeetingForm)
+            {
+                if (!SelectedDate.HasValue)
+                {
+                    AddError(nameof(SelectedDate), "Date is required.");
+                }
+
+                if (string.IsNullOrEmpty(SelectedType))
+                {
+                    AddError(nameof(SelectedType), "Meeting type is required.");
+                }
+
+                if (string.IsNullOrEmpty(Topic))
+                {
+                    AddError(nameof(Topic), "Topic is required.");
+                }
+
+                if (!StartTime.HasValue)
+                {
+                    AddError(nameof(StartTime), "Start time is required.");
+                }
+
+                if (!EndTime.HasValue)
+                {
+                    AddError(nameof(EndTime), "End time is required.");
+                }
+                else if (EndTime <= StartTime)
+                {
+                    AddError(nameof(EndTime), "End time must be later than Start time.");
+                }
+            }
+        }
+
+        private string? addedSuccessfullyMessage;
+
+        public string? AddedSuccessfullyMessage
+        {
+            get { return addedSuccessfullyMessage; }
+            set
+            {
+                if (addedSuccessfullyMessage != value)
+                {
+                    addedSuccessfullyMessage = value;
+                    OnPropertyChanged(nameof(AddedSuccessfullyMessage));
+                }
+            }
+        }
+
+    }
 }

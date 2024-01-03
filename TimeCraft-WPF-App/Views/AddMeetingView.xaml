@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             xmlns:validators="clr-namespace:TimeCraft_WPF_App.Validators">
+             d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.RowDefinitions>
@@ -17,11 +16,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel>
-            <TextBlock Text="Add Meeting" FontFamily="../Fonts/#Pacifico Regular" FontSize="40" Foreground="{StaticResource SecondaryTextColor}" FontWeight="Bold" Margin="0,10" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="0" Text="Add Meeting" FontFamily="../Fonts/#Pacifico Regular" FontSize="40" Foreground="{StaticResource SecondaryTextColor}" FontWeight="Bold" Margin="0,10" HorizontalAlignment="Center"/>
 
             <DatePicker
                 Grid.Row="1"
@@ -36,9 +34,6 @@
                     <Binding
                         Path="SelectedDate"
                         UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validators:NotEmptyValidationRule/>
-                        </Binding.ValidationRules>
                     </Binding>
                 </DatePicker.SelectedDate>
             </DatePicker>
@@ -57,9 +52,6 @@
                         Mode="TwoWay"
                         Path="SelectedType"
                         UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validators:NotEmptyValidationRule/>
-                        </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.SelectedItem>
             </ComboBox>
@@ -79,9 +71,6 @@
                     <Binding
                         Path="Topic"
                         UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validators:NotEmptyValidationRule/>
-                        </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
@@ -101,9 +90,6 @@
                     <Binding
                         Path="StartTime"
                         UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validators:NotEmptyValidationRule/>
-                        </Binding.ValidationRules>
                     </Binding>
                 </materialDesign:TimePicker.Text>
             </materialDesign:TimePicker>
@@ -123,14 +109,12 @@
                     <Binding
                         Path="EndTime"
                         UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validators:NotEmptyValidationRule/>
-                        </Binding.ValidationRules>
                     </Binding>
                 </materialDesign:TimePicker.Text>
             </materialDesign:TimePicker>
 
             <Button
+                Grid.Row="6"
                 Width="200"
                 Margin="0, 30"
                 Content="Add Meeting"
@@ -140,6 +124,8 @@
                 Style="{StaticResource MaterialDesignRaisedButton}"
                 ToolTip="Resource name: MaterialDesignRaisedButton"
                 Command="{Binding AddMeetingCommand}"/>
+
+            <TextBlock HorizontalAlignment="Center" Text="{Binding AddedSuccessfullyMessage}" Foreground="LimeGreen" />
         </StackPanel>
     </Grid>
 </UserControl>

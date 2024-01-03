@@ -20,6 +20,5 @@ namespace SharedLibrary.Services
                 return instance;
             }
         }
-        
     }
 }

@@ -5,234 +5,240 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:TimeCraft_WPF_App.Views"
-             xmlns:validators="clr-namespace:TimeCraft_WPF_App.Validators"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{StaticResource SecondaryBackgroundColor}">
-            <TextBlock Text="Check what You have planned so far" FontFamily="../Fonts/#Pacifico Regular" FontSize="40" Foreground="{StaticResource SecondaryTextColor}" FontWeight="Bold" Margin="0,20" HorizontalAlignment="Center"/>
-        </Grid>
-
-        <Grid Grid.Row="1" HorizontalAlignment="Center">
-            <Border BorderBrush="{StaticResource SecondaryBackgroundColor}" BorderThickness="0,0,0,1" Padding="0,0,0,10">
-                <StackPanel Orientation="Horizontal">
-                    <DatePicker
-                        Width="150"
-                        Margin="20,20"
-                        materialDesign:HintAssist.HelperText="Select a date to preview the plans"
-                        materialDesign:HintAssist.Hint="Pick Date"
-                        Style="{StaticResource MaterialDesignOutlinedDatePicker}"
-                        SelectedDate="{Binding SelectedDate, Mode=TwoWay}" />
-                    <ComboBox
-                        Width="150"
-                        Margin="20,20"
-                        materialDesign:HintAssist.HelperText="Sort meetings by start time"
-                        materialDesign:HintAssist.Hint="Select type"
-                        Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                        SelectedItem="{Binding SelectedSortType, Mode=TwoWay}"
-                        SelectedIndex="0">
-                        <ComboBoxItem
-                            Content="Do not Sort" />
-                        <ComboBoxItem
-                            Content="Ascending" />
-                        <ComboBoxItem
-                            Content="Descending" />
-                    </ComboBox>
-                    <ComboBox
-                        Width="150"
-                        Margin="20,20"
-                        materialDesign:HintAssist.HelperText="Filter tasks by priority"
-                        materialDesign:HintAssist.Hint="Select priority"
-                        Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                        SelectedItem="{Binding SelectedPriority, Mode=TwoWay}"
-                        SelectedIndex="0">
-                        <ComboBoxItem
-                            Content="All" />
-                        <ComboBoxItem
-                            Content="Low" />
-                        <ComboBoxItem
-                            Content="Normal" />
-                        <ComboBoxItem
-                            Content="High" />
-                    </ComboBox>
+    <materialDesign:DialogHost
+        DialogTheme="Inherit"
+        DialogContentUniformCornerRadius="20"
+        Identifier="DeleteConfirmationDialog"
+        IsOpen="{Binding IsDialogOpen}">
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel Orientation="Vertical" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Are you sure you want to delete this activity?" FontSize="16" FontWeight="Medium" Margin="0,0,0,20" TextAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="Yes" FontSize="16" FontWeight="Medium" Command="{Binding DataContext.DeleteActivityCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource MaterialDesignFlatButton}" Margin="5"/>
+                    <Button Content="No" FontSize="16" FontWeight="Medium"  Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{StaticResource MaterialDesignFlatButton}" Margin="5"/>
                 </StackPanel>
-            </Border>
-        </Grid>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <DataGrid
-                    AutoGenerateColumns="False"
-                    CanUserAddRows="False"
-                    HeadersVisibility="All"
-                    ItemsSource="{Binding Meetings}"
-                    SelectionUnit="FullRow">
-                    <DataGrid.Columns>
-                        <materialDesign:DataGridComboBoxColumn
-                            Width="Auto"
-                            Header="Kinds Of Meetings"
-                            IsEditable="True"
-                            ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.KindsOfMeetings}"
-                            SelectedValueBinding="{Binding KindOfMeeting}">
-                        </materialDesign:DataGridComboBoxColumn>
-                        <materialDesign:DataGridTextColumn
-                            Width="Auto"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                            Header="Topic">
-                            <materialDesign:DataGridTextColumn.Binding>
-                                <Binding
-                                    Path="Topic">
-                                    <Binding.ValidationRules>
-                                        <validators:NotEmptyValidationRule/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </materialDesign:DataGridTextColumn.Binding>
-                        </materialDesign:DataGridTextColumn>
-                        <DataGridTemplateColumn Header="Start Time">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding MeetingStartTime, StringFormat='HH:mm'}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                            <DataGridTemplateColumn.CellEditingTemplate>
-                                <DataTemplate>
-                                    <materialDesign:TimePicker
-                                        x:Name="PresetTimePicker"
-                                        Width="Auto"
-                                        Is24Hours="True"
-                                        SelectedTime="{Binding MeetingStartTimeDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellEditingTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="End Time">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding MeetingEndTime, StringFormat='HH:mm'}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                            <DataGridTemplateColumn.CellEditingTemplate>
-                                <DataTemplate>
-                                    <materialDesign:TimePicker
-                                        x:Name="PresetTimePicker"
-                                        Width="Auto"
-                                        Is24Hours="True"
-                                        SelectedTime="{Binding MeetingEndTimeDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellEditingTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button
-                                        HorizontalAlignment="Left"
-                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
-                                        ToolTip="MaterialDesignFloatingActionMiniButton"
-                                        Command="{Binding DataContext.DeleteMeetingCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                        CommandParameter="{Binding}">
-                                        <materialDesign:PackIcon
-                                            Width="20"
-                                            Height="20"
-                                            Foreground="{StaticResource PrimaryTextColor}"
-                                            Kind="DeleteOutline" />
-                                    </Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+            <Grid Grid.Row="0" Background="{StaticResource SecondaryBackgroundColor}">
+                <TextBlock Text="Check what You have planned so far" FontFamily="../Fonts/#Pacifico Regular" FontSize="40" Foreground="{StaticResource SecondaryTextColor}" FontWeight="Bold" Margin="0,20" HorizontalAlignment="Center"/>
             </Grid>
-            <Grid Grid.Column="1">
-                <DataGrid
-                    AutoGenerateColumns="False"
-                    CanUserAddRows="False"
-                    HeadersVisibility="All"
-                    ItemsSource="{Binding Tasks}"
-                    SelectionUnit="FullRow">
-                    <DataGrid.Columns>
-                        <materialDesign:DataGridTextColumn
-                            Width="Auto"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                            Header="Name">
-                            <materialDesign:DataGridTextColumn.Binding>
-                                <Binding
-                                    Path="TaskName">
-                                    <Binding.ValidationRules>
-                                        <validators:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </materialDesign:DataGridTextColumn.Binding>
-                        </materialDesign:DataGridTextColumn>
-                        <materialDesign:DataGridTextColumn
-                            Width="Auto"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                            Header="Description">
-                            <materialDesign:DataGridTextColumn.Binding>
-                                <Binding
-                                    Path="TaskDescription">
-                                    <Binding.ValidationRules>
-                                        <validators:NotEmptyValidationRule/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </materialDesign:DataGridTextColumn.Binding>
-                        </materialDesign:DataGridTextColumn>
-                        <materialDesign:DataGridComboBoxColumn
-                            Width="Auto"
-                            Header="Priority"
-                            IsEditable="True"
-                            ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.Priorities}"
-                            SelectedValueBinding="{Binding TaskPriority}">
-                        </materialDesign:DataGridComboBoxColumn>
-                        <DataGridCheckBoxColumn
-                            Binding="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <DataGridCheckBoxColumn.Header>
-                                <Border Background="Transparent">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Is Completed" />
-                                    </StackPanel>
-                                </Border>
-                            </DataGridCheckBoxColumn.Header>
-                            <DataGridCheckBoxColumn.HeaderStyle>
-                                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                </Style>
-                            </DataGridCheckBoxColumn.HeaderStyle>
-                        </DataGridCheckBoxColumn>
-                        <DataGridTemplateColumn>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button
-                                        HorizontalAlignment="Left"
-                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
-                                        ToolTip="MaterialDesignFloatingActionMiniButton"
-                                        Command="{Binding DataContext.DeleteTaskCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                        CommandParameter="{Binding}">
-                                        <materialDesign:PackIcon
-                                            Width="20"
-                                            Height="20"
-                                            Foreground="{StaticResource PrimaryTextColor}"
-                                            Kind="DeleteOutline" />
-                                    </Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+
+            <Grid Grid.Row="1" HorizontalAlignment="Center">
+                <Border BorderBrush="{StaticResource SecondaryBackgroundColor}" BorderThickness="0,0,0,1" Padding="0,0,0,10">
+                    <StackPanel Orientation="Horizontal">
+                        <DatePicker
+                            Width="150"
+                            Margin="20,20"
+                            materialDesign:HintAssist.HelperText="Select a date to preview the plans"
+                            materialDesign:HintAssist.Hint="Pick Date"
+                            Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                            SelectedDate="{Binding SelectedDate, Mode=TwoWay}" />
+                        <ComboBox
+                            Width="150"
+                            Margin="20,20"
+                            materialDesign:HintAssist.HelperText="Sort meetings by start time"
+                            materialDesign:HintAssist.Hint="Select type"
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                            SelectedItem="{Binding SelectedSortType, Mode=TwoWay}"
+                            SelectedIndex="0">
+                            <ComboBoxItem
+                                Content="Do not Sort" />
+                            <ComboBoxItem
+                                Content="Ascending" />
+                            <ComboBoxItem
+                                Content="Descending" />
+                        </ComboBox>
+                        <ComboBox
+                            Width="150"
+                            Margin="20,20"
+                            materialDesign:HintAssist.HelperText="Filter tasks by priority"
+                            materialDesign:HintAssist.Hint="Select priority"
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                            SelectedItem="{Binding SelectedPriority, Mode=TwoWay}"
+                            SelectedIndex="0">
+                            <ComboBoxItem
+                                Content="All" />
+                            <ComboBoxItem
+                                Content="Low" />
+                            <ComboBoxItem
+                                Content="Normal" />
+                            <ComboBoxItem
+                                Content="High" />
+                        </ComboBox>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <DataGrid
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        HeadersVisibility="All"
+                        ItemsSource="{Binding Meetings}"
+                        SelectionUnit="FullRow">
+                        <DataGrid.Columns>
+                            <materialDesign:DataGridComboBoxColumn
+                                Width="Auto"
+                                Header="Kinds Of Meetings"
+                                IsEditable="False"
+                                ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.KindsOfMeetings}"
+                                SelectedValueBinding="{Binding KindOfMeeting}">
+                            </materialDesign:DataGridComboBoxColumn>
+                            <materialDesign:DataGridTextColumn
+                                Width="Auto"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                Header="Topic">
+                                <materialDesign:DataGridTextColumn.Binding>
+                                    <Binding
+                                        Path="Topic">
+                                    </Binding>
+                                </materialDesign:DataGridTextColumn.Binding>
+                            </materialDesign:DataGridTextColumn>
+                            <DataGridTemplateColumn Header="Start Time">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding MeetingStartTime, StringFormat='HH:mm'}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:TimePicker
+                                            x:Name="PresetTimePicker"
+                                            Width="Auto"
+                                            Is24Hours="True"
+                                            SelectedTime="{Binding MeetingStartTimeDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="End Time">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding MeetingEndTime, StringFormat='HH:mm'}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:TimePicker
+                                            x:Name="PresetTimePicker"
+                                            Width="Auto"
+                                            Is24Hours="True"
+                                            SelectedTime="{Binding MeetingEndTimeDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button
+                                            HorizontalAlignment="Left"
+                                            IsEnabled="True"
+                                            Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                            ToolTip="MaterialDesignFloatingActionMiniButton"
+                                            Command="{Binding DataContext.SaveActivityToDeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon
+                                                Width="20"
+                                                Height="20"
+                                                Foreground="{StaticResource PrimaryTextColor}"
+                                                Kind="DeleteOutline" />
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <DataGrid
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        HeadersVisibility="All"
+                        ItemsSource="{Binding Tasks}"
+                        SelectionUnit="FullRow">
+                        <DataGrid.Columns>
+                            <materialDesign:DataGridTextColumn
+                                Width="Auto"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                Header="Name">
+                                <materialDesign:DataGridTextColumn.Binding>
+                                    <Binding
+                                        Path="TaskName">
+                                    </Binding>
+                                </materialDesign:DataGridTextColumn.Binding>
+                            </materialDesign:DataGridTextColumn>
+                            <materialDesign:DataGridTextColumn
+                                Width="Auto"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                Header="Description">
+                                <materialDesign:DataGridTextColumn.Binding>
+                                    <Binding
+                                Path="TaskDescription">
+                                    </Binding>
+                                </materialDesign:DataGridTextColumn.Binding>
+                            </materialDesign:DataGridTextColumn>
+                            <materialDesign:DataGridComboBoxColumn
+                                Width="Auto"
+                                Header="Priority"
+                                IsEditable="False"
+                                ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.Priorities}"
+                                SelectedValueBinding="{Binding TaskPriority}">
+                            </materialDesign:DataGridComboBoxColumn>
+                            <DataGridCheckBoxColumn
+                                Binding="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridCheckBoxColumn.Header>
+                                    <Border Background="Transparent">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Is Completed" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataGridCheckBoxColumn.Header>
+                                <DataGridCheckBoxColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridCheckBoxColumn.HeaderStyle>
+                            </DataGridCheckBoxColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button
+                                            HorizontalAlignment="Left"
+                                            IsEnabled="True"
+                                            Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                            ToolTip="MaterialDesignFloatingActionMiniButton"
+                                            Command="{Binding DataContext.SaveActivityToDeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon
+                                                Width="20"
+                                                Height="20"
+                                                Foreground="{StaticResource PrimaryTextColor}"
+                                                Kind="DeleteOutline" />
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </Grid>
         </Grid>
-    </Grid>
+    </materialDesign:DialogHost>
 </UserControl>

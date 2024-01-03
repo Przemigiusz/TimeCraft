@@ -7,6 +7,8 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:viewmodels="clr-namespace:TimeCraft_WPF_App.ViewModels"
         xmlns:views="clr-namespace:TimeCraft_WPF_App.Views"
+        xmlns:converters="clr-namespace:TimeCraft_WPF_App.Converters"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="650"
@@ -18,7 +20,8 @@
         
         AllowsTransparency="False"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Background="{DynamicResource MaterialDesignPaper}">
+        Background="{DynamicResource MaterialDesignPaper}"
+        UseLayoutRounding="True">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewmodels:HomeTabViewModel}">
@@ -33,73 +36,241 @@
         <DataTemplate DataType="{x:Type viewmodels:AddTaskViewModel}">
             <views:AddTaskView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
-            <views:LoginView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:RegistrationViewModel}">
-            <views:RegistrationView />
-        </DataTemplate>
+        <converters:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
     </Window.Resources>
 
     <Border CornerRadius="20">
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+            <Grid Visibility="{Binding IsUserLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0">
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="{StaticResource PrimaryGradientColor}" Offset="0"/>
-                        <GradientStop Color="{StaticResource SecondaryGradientColor}" Offset="0.6"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-                <DockPanel>
-                    <StackPanel DockPanel.Dock="Top">
-                        <TextBlock Text="TimeCraft" Foreground="{StaticResource PrimaryTextColor}" FontSize="25" FontFamily="Montserrat" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,25,0,50"/>
+                <Border Grid.Column="0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="{StaticResource PrimaryGradientColor}" Offset="0"/>
+                            <GradientStop Color="{StaticResource SecondaryGradientColor}" Offset="0.6"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top">
+                            <TextBlock Text="TimeCraft" Foreground="{StaticResource PrimaryTextColor}" FontSize="25" FontFamily="Montserrat" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,25,0,50"/>
 
-                        <RadioButton Style="{StaticResource MenuButton}" Tag="{StaticResource PrimaryTextColor}" Command="{Binding ShowHomeViewCommand}" IsChecked="True">
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIcon}"/>
-                                <TextBlock Text="Home" Style="{StaticResource MenuButtonText}"/>
-                            </StackPanel>
-                        </RadioButton>
+                            <RadioButton Style="{StaticResource MenuButton}" Tag="{StaticResource PrimaryTextColor}" Command="{Binding ShowHomeViewCommand}" IsChecked="{Binding IsHomeBtnChecked}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIcon}"/>
+                                    <TextBlock Text="Home" Style="{StaticResource MenuButtonText}"/>
+                                </StackPanel>
+                            </RadioButton>
 
-                        <RadioButton Style="{StaticResource MenuButton}" Tag="{StaticResource PrimaryTextColor}" Command="{Binding ShowCalendarViewCommand}">
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="Calendar" Style="{StaticResource MenuButtonIcon}"/>
-                                <TextBlock Text="Plans" Style="{StaticResource MenuButtonText}"/>
-                            </StackPanel>
-                        </RadioButton>
+                            <RadioButton Style="{StaticResource MenuButton}" Tag="{StaticResource PrimaryTextColor}" Command="{Binding ShowCalendarViewCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="Calendar" Style="{StaticResource MenuButtonIcon}"/>
+                                    <TextBlock Text="Plans" Style="{StaticResource MenuButtonText}"/>
+                                </StackPanel>
+                            </RadioButton>
 
-                        <RadioButton Style="{StaticResource MenuButton}" Tag="{StaticResource PrimaryTextColor}" Command="{Binding AddMeetingViewCommand}">
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="Handshake" Style="{StaticResource MenuButtonIcon}"/>
-                                <TextBlock Text="Add Meeting" Style="{StaticResource MenuButtonText}"/>
-                            </StackPanel>
-                        </RadioButton>
+                            <RadioButton Style="{StaticResource MenuButton}" Tag="{StaticResource PrimaryTextColor}" Command="{Binding AddMeetingViewCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="Handshake" Style="{StaticResource MenuButtonIcon}"/>
+                                    <TextBlock Text="Add Meeting" Style="{StaticResource MenuButtonText}"/>
+                                </StackPanel>
+                            </RadioButton>
 
-                        <RadioButton Style="{StaticResource MenuButton}" Tag="{StaticResource PrimaryTextColor}" Command="{Binding AddTaskViewCommand}">
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="StickyNote" Style="{StaticResource MenuButtonIcon}"/>
-                                <TextBlock Text="Add Task" Style="{StaticResource MenuButtonText}"/>
-                            </StackPanel>
-                        </RadioButton>
-                    </StackPanel>
-
-                    <RadioButton Style="{StaticResource MenuButton}" Tag="{StaticResource PrimaryTextColor}" VerticalAlignment="Bottom" Command="{Binding ExitCommand}">
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="PowerOff" Style="{StaticResource MenuButtonIcon}"/>
-                            <TextBlock Text="Quit" Style="{StaticResource MenuButtonText}"/>
+                            <RadioButton Style="{StaticResource MenuButton}" Tag="{StaticResource PrimaryTextColor}" Command="{Binding AddTaskViewCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="StickyNote" Style="{StaticResource MenuButtonIcon}"/>
+                                    <TextBlock Text="Add Task" Style="{StaticResource MenuButtonText}"/>
+                                </StackPanel>
+                            </RadioButton>
                         </StackPanel>
-                    </RadioButton>
 
-                </DockPanel>
-            </Border>
-            <Border Grid.Column="1" Padding="0,0,0,30" Background="{StaticResource PrimaryBackgroundColor}">
-                <ContentControl Content="{Binding CurrentTab}" />
-            </Border>
+                        <RadioButton Style="{StaticResource MenuButton}" Tag="{StaticResource PrimaryTextColor}" VerticalAlignment="Bottom" Command="{Binding LogoutCommand}" IsChecked="{Binding IsLogoutBtnChecked}">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="RightFromBracket" Style="{StaticResource MenuButtonIcon}"/>
+                                <TextBlock Text="Logout" Style="{StaticResource MenuButtonText}"/>
+                            </StackPanel>
+                        </RadioButton>
+
+                    </DockPanel>
+                </Border>
+                <Border Grid.Column="1" Padding="0" Background="{StaticResource PrimaryBackgroundColor}">
+                    <ContentControl Content="{Binding CurrentTab}" />
+                </Border>
+            </Grid>
+            <Grid Visibility="{Binding IsUserLoggedIn, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Background="{StaticResource PrimaryBackgroundColor}">
+                    <Image Source="../Images/TimeCraftArt.png" Stretch="Uniform"/>
+                </Border>
+                <Border Grid.Column="1" Background="{StaticResource PrimaryBackgroundColor}">
+                    <TabControl SelectedIndex="{Binding SelectedTabIndex}">
+                        <TabItem Header="Sign In">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel>
+                                    <TextBlock Grid.Row="0" Text="Sign in to App" FontFamily="../Fonts/#Pacifico Regular" FontSize="40" Foreground="{StaticResource SecondaryTextColor}" FontWeight="Bold" Margin="0,10" HorizontalAlignment="Center"/>
+
+                                    <TextBox
+                                        Grid.Row="1"
+                                        Margin="0, 20"
+                                        VerticalAlignment="Center"
+                                        materialDesign:HintAssist.Hint="Email"
+                                        materialDesign:HintAssist.HelperText="Enter your email address"
+                                        Width="300"
+                                        FontSize="15"
+                                        FontWeight="Medium"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                        <TextBox.Text>
+                                            <Binding
+                                                Path="EmailLogin"
+                                                UpdateSourceTrigger="PropertyChanged">
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                    <PasswordBox
+                                        Grid.Row="2"
+                                        Margin="0, 20"
+                                        Width="300"
+                                        FontSize="15"
+                                        FontWeight="Medium"
+                                        x:Name="PasswordBox"
+                                        materialDesign:HintAssist.HelperText="Enter your password"
+                                        materialDesign:HintAssist.Hint="Password"
+                                        materialDesign:TextFieldAssist.HasClearButton="True"
+                                        materialDesign:PasswordBoxAssist.Password="{Binding Path=PasswordLogin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                        Style="{StaticResource MaterialDesignRevealPasswordBox}"/>
+
+                                    <Button
+                                        Grid.Row="3"
+                                        Width="200"
+                                        Margin="0, 30, 0, 20"
+                                        Content="Sign In"
+                                        FontWeight="Medium"
+                                        Foreground="{StaticResource PrimaryTextColor}"
+                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        ToolTip="Resource name: MaterialDesignRaisedButton"
+                                        Command="{Binding SignInCommand}"/>
+
+                                    <TextBlock HorizontalAlignment="Center" Text="{Binding LoginErrorMessage}" Foreground="Red" />
+
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Sign Up">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel>
+                                    <TextBlock Grid.Row="0" Text="Create Account" FontFamily="../Fonts/#Pacifico Regular" FontSize="40" Foreground="{StaticResource SecondaryTextColor}" FontWeight="Bold" Margin="0,10" HorizontalAlignment="Center"/>
+
+                                    <TextBox
+                                        Grid.Row="1"
+                                        Margin="0, 10"
+                                        VerticalAlignment="Center"
+                                        materialDesign:HintAssist.Hint="Email"
+                                        materialDesign:HintAssist.HelperText="Enter your email address"
+                                        Width="300"
+                                        FontSize="15"
+                                        FontWeight="Medium"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                        <TextBox.Text>
+                                            <Binding
+                                                Path="EmailRegistration"
+                                                UpdateSourceTrigger="PropertyChanged">
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                    <TextBox
+                                        Grid.Row="2"
+                                        Margin="0, 10"
+                                        VerticalAlignment="Center"
+                                        materialDesign:HintAssist.Hint="First Name"
+                                        materialDesign:HintAssist.HelperText="Enter your first name"
+                                        Width="300"
+                                        FontSize="15"
+                                        FontWeight="Medium"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                        <TextBox.Text>
+                                            <Binding
+                                                Path="FirstNameRegistration"
+                                                UpdateSourceTrigger="PropertyChanged">
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                    <TextBox
+                                        Grid.Row="3"
+                                        Margin="0, 10"
+                                        VerticalAlignment="Center"
+                                        materialDesign:HintAssist.Hint="Last Name"
+                                        materialDesign:HintAssist.HelperText="Enter your last name"
+                                        Width="300"
+                                        FontSize="15"
+                                        FontWeight="Medium"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                        <TextBox.Text>
+                                            <Binding
+                                                Path="LastNameRegistration"
+                                                UpdateSourceTrigger="PropertyChanged">
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                    <PasswordBox
+                                        Grid.Row="4"
+                                        Margin="0, 25"
+                                        Width="300"
+                                        FontSize="15"
+                                        FontWeight="Medium"
+                                        materialDesign:HintAssist.HelperText="Enter your password"
+                                        materialDesign:HintAssist.Hint="Password"
+                                        materialDesign:TextFieldAssist.HasClearButton="True"
+                                        materialDesign:PasswordBoxAssist.Password="{Binding Path=PasswordRegistration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                        Style="{StaticResource MaterialDesignRevealPasswordBox}"/>
+
+                                    <Button
+                                        Grid.Row="6"
+                                        Width="200"
+                                        Margin="0, 30, 0, 20"
+                                        Content="Sign Up"
+                                        FontWeight="Medium"
+                                        Foreground="{StaticResource PrimaryTextColor}"
+                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        ToolTip="Resource name: MaterialDesignRaisedButton"
+                                        Command="{Binding SignUpCommand}"/>
+
+                                    <TextBlock HorizontalAlignment="Center" Text="{Binding RegistrationSuccessfulMessage}" Foreground="LimeGreen" />
+
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+
+                </Border>
+            </Grid>
         </Grid>
     </Border>
 </Window>

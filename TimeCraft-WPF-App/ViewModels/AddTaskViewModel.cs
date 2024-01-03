@@ -19,19 +19,15 @@ namespace TimeCraft_WPF_App.ViewModels
 
         public ICommand AddTaskCommand { get; set; }
 
+        private bool shouldValidateAddTaskForm;
+
         public AddTaskViewModel()
         {
+            shouldValidateAddTaskForm = false;
+
             plansService = PlansService.Instance;
             priorities = new ObservableCollection<string>(plansService.PlansRepository.Priorities);
             AddTaskCommand = new RelayCommand(_ => AddTask(), _ => CanAddTask());
-        }
-
-        private bool CanAddTask()
-        {
-            return SelectedDate.HasValue
-                && !string.IsNullOrEmpty(Name)
-                && !string.IsNullOrEmpty(SelectedPriority)
-                && !string.IsNullOrEmpty(Description);
         }
 
         public DateTime? SelectedDate
@@ -91,14 +87,26 @@ namespace TimeCraft_WPF_App.ViewModels
             get { return priorities; }
         }
 
+        private bool CanAddTask()
+        {
+            ValidateAddTaskForm();
+            return !HasErrors;
+        }
+
         private void AddTask()
         {
-            if (SelectedDate.HasValue && !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(SelectedPriority) && !string.IsNullOrEmpty(Description))
-            {
-                string formattedDate = SelectedDate.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            shouldValidateAddTaskForm = true;
+            AddedSuccessfullyMessage = null;
 
-                SharedLibrary.Models.Task newTask = new SharedLibrary.Models.Task(Name, Description, formattedDate, SelectedPriority, false);
+            if (CanAddTask())
+            {
+                string formattedDate = SelectedDate!.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                SharedLibrary.Models.Task newTask = new SharedLibrary.Models.Task(Name!, Description!, formattedDate, SelectedPriority!, false);
                 plansService.PlansRepository.addTask(newTask);
+
+                shouldValidateAddTaskForm = false;
+                AddedSuccessfullyMessage = "The task was added successfully.";
 
                 ResetForm();
             }
@@ -110,6 +118,57 @@ namespace TimeCraft_WPF_App.ViewModels
             Name = null;
             SelectedPriority = null;
             Description = null;
+        }
+
+        private void ClearFormErrors()
+        {
+            ClearErrors(nameof(SelectedDate));
+            ClearErrors(nameof(Name));
+            ClearErrors(nameof(SelectedPriority));
+            ClearErrors(nameof(Description));
+        }
+
+        private void ValidateAddTaskForm()
+        {
+            ClearFormErrors();
+
+            if (shouldValidateAddTaskForm)
+            {
+                if (!SelectedDate.HasValue)
+                {
+                    AddError(nameof(SelectedDate), "Date is required.");
+                }
+
+                if (string.IsNullOrEmpty(Name))
+                {
+                    AddError(nameof(Name), "Task name is required.");
+                }
+
+                if (string.IsNullOrEmpty(SelectedPriority))
+                {
+                    AddError(nameof(SelectedPriority), "Task priority is required.");
+                }
+
+                if (string.IsNullOrEmpty(Description))
+                {
+                    AddError(nameof(Description), "Task description is required.");
+                }
+            }
+        }
+
+        private string? addedSuccessfullyMessage;
+
+        public string? AddedSuccessfullyMessage
+        {
+            get { return addedSuccessfullyMessage; }
+            set
+            {
+                if (addedSuccessfullyMessage != value)
+                {
+                    addedSuccessfullyMessage = value;
+                    OnPropertyChanged(nameof(AddedSuccessfullyMessage));
+                }
+            }
         }
     }
 }
