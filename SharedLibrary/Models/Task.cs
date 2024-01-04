@@ -28,6 +28,6 @@
         public string TaskDate { get { return taskDate; } set { taskDate = value; } }
         public string TaskPriority { get { return taskPriority; } set { taskPriority = value; } }
         public bool IsCompleted { get { return isCompleted; } set { isCompleted = value; } }
-        public int UserId { get { return userId; } }
+        public int UserId { get { return userId; } set { userId = value; } }
     }
 }

@@ -3,13 +3,13 @@ using TimeCraft_Console_App.Messages;
 
 namespace TimeCraft_Console_App.Interface_Elements
 {
-    internal class WhatToDoMenuC : Menu
+    internal class WhatToDoMenuLoR : Menu
     {
-        public WhatToDoMenuC(string menuHeader, List<SelectOption> menuOptions) : base(menuHeader, menuOptions)
+        public WhatToDoMenuLoR(string menuHeader, List<SelectOption> menuOptions) : base(menuHeader, menuOptions)
         {
-            this.topOffset = 3;
+            this.topOffset = 0;
         }
-        public CNavigationResult navigate()
+        public int navigate()
         {
             if (this.options.Count > 0)
             {
@@ -31,11 +31,12 @@ namespace TimeCraft_Console_App.Interface_Elements
                             switch (this.currentOptionId)
                             {
                                 case 0:
-                                    return new CNavigationResult(Codes.WTDMenuCTDAddPlans);
+                                    return Codes.LoRLogin;
                                 case 1:
-                                    return new CNavigationResult(Codes.WTDMenuCTDShowPlans);
+                                    return Codes.LoRRegistration;
                                 case 2:
-                                    return new CNavigationResult(Codes.WTDMenuCTDCancel);
+                                    Console.Clear();
+                                    return Codes.Exit;
                             }
                             break;
                     }
@@ -43,7 +44,7 @@ namespace TimeCraft_Console_App.Interface_Elements
             }
             else
             {
-                throw new InvalidOperationException("Brak elementów w kolekcji 'options' - WhatToDoMenuC");
+                throw new InvalidOperationException("Brak elementów w kolekcji 'options' - WhatToDoMenuLoR");
             }
         }
     }

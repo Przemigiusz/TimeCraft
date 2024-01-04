@@ -42,7 +42,7 @@ namespace SharedLibrary.Models
         public string MeetingDate { get { return meetingDate; } set { meetingDate = value; } }
         public string MeetingStartTime { get { return meetingStartTime; } set { meetingStartTime = value; } }
         public string MeetingEndTime { get { return meetingEndTime; } set { meetingEndTime = value; } }
-        public int UserId { get { return userId; } }
+        public int UserId { get { return userId; } set { userId = value; } }
         public DateTime MeetingStartTimeDate
         {
             get { return meetingStartTimeDate; }

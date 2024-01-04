@@ -153,6 +153,7 @@ namespace TimeCraft_WPF_App.ViewModels
         {
             IsUserLoggedIn = false;
             IsLogoutBtnChecked = false;
+            this.userSession.LoggedUser = null;
             CurrentTab = new LoginViewModel();
         }
 

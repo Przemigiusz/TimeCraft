@@ -52,6 +52,9 @@ namespace SharedLibrary.Repositories
             Meeting meeting8 = new Meeting("Conference", "New DB2", "13/11/2023", "16:00", "17:00", 2);
             Meeting meeting9 = new Meeting("Conference", "Testing3", "13/11/2023", "17:30", "18:00", 2);
 
+            Meeting meeting10 = new Meeting("Conference", "New DB5", "04/01/2024", "16:00", "17:00", 0);
+            Meeting meeting11 = new Meeting("Conference", "Testing5", "04/01/2024", "17:30", "18:00", 1);
+
             Models.Task task1 = new Models.Task("Refuel the car", "My mum wants me to refuel her car", "13/11/2023", "Low", false, 0);
             Models.Task task2 = new Models.Task("Respond to emails", "Respond to my teachers emails", "13/11/2023", "Normal", false, 0);
             Models.Task task3 = new Models.Task("Buy gift", "Buy gift for Magda's birthday", "13/11/2023", "High", false, 0);
@@ -64,6 +67,9 @@ namespace SharedLibrary.Repositories
             Models.Task task8 = new Models.Task("Buy gift2", "Buy gift for Magda's birthday", "13/11/2023", "High", false, 2);
             Models.Task task9 = new Models.Task("Refuel the car3", "My mum wants me to refuel her car", "13/11/2023", "Low", false, 2);
 
+            Models.Task task10 = new Models.Task("Buy gift2", "Buy gift for Magda's birthday", "04/01/2024", "High", false, 0);
+            Models.Task task11 = new Models.Task("Refuel the car3", "My mum wants me to refuel her car", "04/01/2024", "Low", false, 1);
+
             this.tasks.Add(task1);
             this.tasks.Add(task2);
             this.tasks.Add(task3);
@@ -75,6 +81,9 @@ namespace SharedLibrary.Repositories
             this.tasks.Add(task8);
             this.tasks.Add(task9);
 
+            this.tasks.Add(task10);
+            this.tasks.Add(task11);
+
             this.meetings.Add(meeting1);
             this.meetings.Add(meeting2);
             this.meetings.Add(meeting3);
@@ -85,6 +94,9 @@ namespace SharedLibrary.Repositories
             this.meetings.Add(meeting7);
             this.meetings.Add(meeting8);
             this.meetings.Add(meeting9);
+
+            this.meetings.Add(meeting10);
+            this.meetings.Add(meeting11);
         }
 
         private void initializePlansComponents()

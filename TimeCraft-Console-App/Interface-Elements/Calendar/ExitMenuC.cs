@@ -28,7 +28,7 @@ namespace TimeCraft_Console_App.Interface_Elements.Calendar
                     case ConsoleKey.Enter:
                         if (currentOptionId == 0)
                         {
-                            return Codes.Exit;
+                            return Codes.ELogout;
                         }
                         else
                         {

@@ -1,6 +1,5 @@
-﻿using Spectre.Console;
+﻿using SharedLibrary.Models;
 using TimeCraft_Console_App.Messages;
-using SharedLibrary.Models;
 
 namespace TimeCraft_Console_App.Views
 {

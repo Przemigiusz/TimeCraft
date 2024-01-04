@@ -22,6 +22,7 @@
         public const int SChosenOption = 2000;
 
         public const int CContinueNavigation = 3000;
+        public const int CLogout = 3001;
 
         public const int WTDMenuCTDAddPlans = 4000;
         public const int WTDMenuCTDShowPlans = 4001;
@@ -41,8 +42,12 @@
         public const int DSxit = 7003;
 
         public const int EBack = 8000;
+        public const int ELogout = 8001;
 
         public const int SMContinue = 9000;
         public const int SMExit = 9001;
+
+        public const int LoRLogin = 10000;
+        public const int LoRRegistration = 10001;
     }
 }

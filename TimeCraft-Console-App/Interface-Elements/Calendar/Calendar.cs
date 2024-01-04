@@ -1,7 +1,7 @@
-﻿using Spectre.Console;
+﻿using SharedLibrary.Models;
+using Spectre.Console;
 using TimeCraft_Console_App.Interface_Elements.Forms.FormFields;
 using TimeCraft_Console_App.Messages;
-using SharedLibrary.Models;
 
 namespace TimeCraft_Console_App.Interface_Elements.Calendar
 {
@@ -19,9 +19,10 @@ namespace TimeCraft_Console_App.Interface_Elements.Calendar
         private int endYPos;
 
         private string calendarAsciiArt = "  ___        _                _           \r\n / __| __ _ | | ___  _ _   __| | __ _  _ _ \r\n| (__ / _` || |/ -_)| ' \\ / _` |/ _` || '_|\r\n \\___|\\__,_||_|\\___||_||_|\\__,_|\\__,_||_|  ";
-        
+
         private List<string> dayAbbreviations;
-        public Calendar(List<string> months, List<string> dayAbbreviations, List<Meeting> meetings, List<SharedLibrary.Models.Task> tasks) {
+        public Calendar(List<string> months, List<string> dayAbbreviations, List<Meeting> meetings, List<SharedLibrary.Models.Task> tasks)
+        {
             this.currentElementId = 0;
             this.elements = new List<Element>();
             this.meetings = meetings;
@@ -46,7 +47,7 @@ namespace TimeCraft_Console_App.Interface_Elements.Calendar
                 new SelectOption("Yes, I am sure"),
                 new SelectOption("No, I want to go back"),
             };
-            string exitMenuHeader = "Are You sure You want to exit the app?";
+            string exitMenuHeader = "Are You sure You want to logout?";
             this.exitMenu = new Interface_Elements.Calendar.ExitMenuC(exitMenuHeader, exitMenuOptions);
         }
 
@@ -57,7 +58,8 @@ namespace TimeCraft_Console_App.Interface_Elements.Calendar
                 Console.WriteLine("");
             }
         }
-        public void render() {
+        public void render()
+        {
             string[] lines = this.calendarAsciiArt.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
             int maxWidth = lines.Max(line => line.Length);
@@ -124,13 +126,13 @@ namespace TimeCraft_Console_App.Interface_Elements.Calendar
                             }
                             else
                             {
-                                return new CNavigationResult(Codes.Exit);
+                                return new CNavigationResult(Codes.CLogout);
                             }
                     }
                     switch (result)
                     {
-                        case Codes.Exit:
-                            return new CNavigationResult(Codes.Exit);
+                        case Codes.CLogout:
+                            return new CNavigationResult(Codes.CLogout);
                         case Codes.WTDMenuCTDAddPlans:
                         case Codes.WTDMenuCTDShowPlans:
                             return new CNavigationResult(result, chosenDate: this.chosenDate);
@@ -205,7 +207,7 @@ namespace TimeCraft_Console_App.Interface_Elements.Calendar
                         }
                         else
                         {
-                            return Codes.Exit;
+                            return Codes.CLogout;
                         }
                     }
                     else // result.Code() == Codes.TMAddTask/TMScheduleMeeting/TMShowPlans
