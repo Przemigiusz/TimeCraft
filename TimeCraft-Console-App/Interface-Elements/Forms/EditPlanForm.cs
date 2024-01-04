@@ -1,6 +1,6 @@
-﻿using Spectre.Console;
+﻿using SharedLibrary.Models;
+using Spectre.Console;
 using TimeCraft_Console_App.Interface_Elements.Forms.FormFields;
-using SharedLibrary.Models;
 
 namespace TimeCraft_Console_App.Interface_Elements.Forms
 {
@@ -12,7 +12,8 @@ namespace TimeCraft_Console_App.Interface_Elements.Forms
         public IPlan? render(IPlan? plan)
         {
             int i = 1;
-            if (plan != null) {
+            if (plan != null)
+            {
                 if (plan is Meeting)
                 {
                     string[] startingParts = ((Meeting)plan).MeetingStartTime.Split(':');
@@ -25,7 +26,7 @@ namespace TimeCraft_Console_App.Interface_Elements.Forms
                     int.TryParse(startingParts[1], out meetingStartTimeMinutes);
                     int.TryParse(endingParts[0], out meetingEndTimeHours);
                     int.TryParse(endingParts[1], out meetingEndTimeMinutes);
-                    
+
                     this.formFields = new List<FormField>
                     {
                         new SelectField("What kind of meeting is it?", new List<SelectOption> { new SelectOption("Conference"), new SelectOption("Team Meeting"), new SelectOption("Client Meeting") }),
@@ -132,13 +133,13 @@ namespace TimeCraft_Console_App.Interface_Elements.Forms
                     {
                         field.render();
                     }
-                    
+
                 }
                 Console.WriteLine();
                 ConsoleKeyInfo keyInfo;
                 if (plan is Meeting)
                 {
-                    string kindOfMeeting = this.formFields[0].getAnswer();  
+                    string kindOfMeeting = this.formFields[0].getAnswer();
 
                     string topic = string.IsNullOrEmpty(this.formFields[1].getAnswer())
                         ? ((Meeting)plan).Topic
@@ -148,7 +149,7 @@ namespace TimeCraft_Console_App.Interface_Elements.Forms
 
                     string meetingEndTime = this.formFields[3].getAnswer();
 
-                    Meeting meeting = new Meeting(kindOfMeeting, topic, ((Meeting)plan).MeetingDate, meetingStartTime, meetingEndTime);
+                    Meeting meeting = new Meeting(kindOfMeeting, topic, ((Meeting)plan).MeetingDate, meetingStartTime, meetingEndTime, 0);
                     meeting.MeetingId = ((Meeting)plan).MeetingId;
                     AnsiConsole.MarkupLine("[bold white]Meeting updated[/] [mediumspringgreen]successfully![/]\n[bold white]Press[/] [bold mediumspringgreen]Enter[/] [bold white]to[/] [bold mediumspringgreen]Continue[/]");
                     while (true)
@@ -177,7 +178,7 @@ namespace TimeCraft_Console_App.Interface_Elements.Forms
                     bool isCompleted = this.formFields[3].getAnswer() == "Done" ? true : false;
 
 
-                    SharedLibrary.Models.Task task = new SharedLibrary.Models.Task(taskName, taskDescription, ((SharedLibrary.Models.Task)plan).TaskDate, taskPriority, isCompleted);
+                    SharedLibrary.Models.Task task = new SharedLibrary.Models.Task(taskName, taskDescription, ((SharedLibrary.Models.Task)plan).TaskDate, taskPriority, isCompleted, 0);
                     task.TaskId = ((SharedLibrary.Models.Task)plan).TaskId;
                     AnsiConsole.MarkupLine("[bold white]Task updated[/] [bold mediumspringgreen]successfully![/]\n[bold white]Press[/] [bold mediumspringgreen]Enter[/] [bold white]to[/] [bold mediumspringgreen]Continue[/]");
                     while (true)

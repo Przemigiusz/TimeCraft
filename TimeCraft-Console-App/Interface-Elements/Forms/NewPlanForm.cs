@@ -1,7 +1,7 @@
-﻿using Spectre.Console;
+﻿using SharedLibrary.Models;
+using Spectre.Console;
 using System.Globalization;
 using TimeCraft_Console_App.Interface_Elements.Forms.FormFields;
-using SharedLibrary.Models;
 
 namespace TimeCraft_Console_App.Interface_Elements
 {
@@ -31,7 +31,7 @@ namespace TimeCraft_Console_App.Interface_Elements
                 {
                     new SelectField("Priority", new List<SelectOption> { new SelectOption("Low"), new SelectOption("Normal"), new SelectOption("High") }),
                     new TextField("Title"),
-                    new TextAreaField("Description")  
+                    new TextAreaField("Description")
                 };
             }
 
@@ -50,7 +50,7 @@ namespace TimeCraft_Console_App.Interface_Elements
             ConsoleKeyInfo keyInfo;
             if (decision == "Meeting")
             {
-                Meeting meeting = new Meeting(this.formFields[0].getAnswer(), this.formFields[1].getAnswer(), chosenDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), this.formFields[2].getAnswer(), this.formFields[3].getAnswer());
+                Meeting meeting = new Meeting(this.formFields[0].getAnswer(), this.formFields[1].getAnswer(), chosenDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), this.formFields[2].getAnswer(), this.formFields[3].getAnswer(), 0);
                 AnsiConsole.MarkupLine("[bold white]Meeting added[/] [mediumspringgreen]successfully![/]\n[bold white]Press Enter to Continue[/]");
                 while (true)
                 {
@@ -60,10 +60,11 @@ namespace TimeCraft_Console_App.Interface_Elements
                         return meeting;
                     }
                 }
-                
+
             }
-            else {
-                SharedLibrary.Models.Task task = new SharedLibrary.Models.Task(this.formFields[1].getAnswer(), this.formFields[2].getAnswer(), chosenDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), this.formFields[0].getAnswer(), false);
+            else
+            {
+                SharedLibrary.Models.Task task = new SharedLibrary.Models.Task(this.formFields[1].getAnswer(), this.formFields[2].getAnswer(), chosenDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), this.formFields[0].getAnswer(), false, 0);
                 AnsiConsole.MarkupLine("[bold white]Task added[/] [bold mediumspringgreen]successfully![/]\n[bold white]Press[/] [bold mediumspringgreen]Enter[/] [bold white]to[/] [bold mediumspringgreen]Continue[/]");
                 while (true)
                 {
@@ -73,7 +74,7 @@ namespace TimeCraft_Console_App.Interface_Elements
                         return task;
                     }
                 }
-                
+
             }
         }
     }

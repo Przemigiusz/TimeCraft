@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeCraft-WPF-App", "TimeCr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedLibrary", "SharedLibrary\SharedLibrary.csproj", "{C3135952-CEBD-4C06-BE30-E629B7EEA294}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher", "Launcher\Launcher.csproj", "{C49336C7-860C-4830-BAC6-3E28251A50C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C3135952-CEBD-4C06-BE30-E629B7EEA294}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3135952-CEBD-4C06-BE30-E629B7EEA294}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3135952-CEBD-4C06-BE30-E629B7EEA294}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C49336C7-860C-4830-BAC6-3E28251A50C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C49336C7-860C-4830-BAC6-3E28251A50C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C49336C7-860C-4830-BAC6-3E28251A50C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C49336C7-860C-4830-BAC6-3E28251A50C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

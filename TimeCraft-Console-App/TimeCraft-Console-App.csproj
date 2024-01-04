@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj" />
-    <ProjectReference Include="..\TimeCraft-WPF-App\TimeCraft-WPF-App.csproj" />
   </ItemGroup>
 
 </Project>
