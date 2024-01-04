@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using SharedLibrary.Models;
+﻿using SharedLibrary.Models;
+using System.Globalization;
 
 namespace SharedLibrary.Repositories
 {
@@ -26,7 +26,8 @@ namespace SharedLibrary.Repositories
             }
         }
 
-        private PlansRepository() {
+        private PlansRepository()
+        {
             this.kindsOfMeetings = new List<string>();
             this.priorities = new List<string>();
 
@@ -37,29 +38,31 @@ namespace SharedLibrary.Repositories
             this.initializePlansComponents();
         }
 
-        private void initializePlans() {
-            Meeting meeting1 = new Meeting("Conference", "Testing", "13/11/2023", "12:00", "13:00");
-            Meeting meeting2 = new Meeting("Team Meeting", "Debugging", "13/11/2023", "14:00", "15:00");
-            Meeting meeting3 = new Meeting("Conference", "New DB", "13/11/2023", "16:00", "17:00");
+        private void initializePlans()
+        {
+            Meeting meeting1 = new Meeting("Conference", "Testing", "13/11/2023", "12:00", "13:00", 0);
+            Meeting meeting2 = new Meeting("Team Meeting", "Debugging", "13/11/2023", "14:00", "15:00", 0);
+            Meeting meeting3 = new Meeting("Conference", "New DB", "13/11/2023", "16:00", "17:00", 0);
 
-            Meeting meeting4 = new Meeting("Team Meeting", "New Concepts", "12/11/2023", "11:00", "12:00");
-            Meeting meeting5 = new Meeting("Client Meeting", "Changes", "11/11/2023", "10:00", "11:00");
+            Meeting meeting4 = new Meeting("Team Meeting", "New Concepts", "12/11/2023", "11:00", "12:00", 1);
+            Meeting meeting5 = new Meeting("Client Meeting", "Changes", "11/11/2023", "10:00", "11:00", 1);
 
-            Meeting meeting6 = new Meeting("Conference", "Testing2", "13/11/2023", "12:00", "13:00");
-            Meeting meeting7 = new Meeting("Team Meeting", "Debugging2", "13/11/2023", "14:00", "15:00");
-            Meeting meeting8 = new Meeting("Conference", "New DB2", "13/11/2023", "16:00", "17:00");
-            Meeting meeting9 = new Meeting("Conference", "Testing3", "13/11/2023", "17:30", "18:00");
+            Meeting meeting6 = new Meeting("Conference", "Testing2", "13/11/2023", "12:00", "13:00", 2);
+            Meeting meeting7 = new Meeting("Team Meeting", "Debugging2", "13/11/2023", "14:00", "15:00", 2);
+            Meeting meeting8 = new Meeting("Conference", "New DB2", "13/11/2023", "16:00", "17:00", 2);
+            Meeting meeting9 = new Meeting("Conference", "Testing3", "13/11/2023", "17:30", "18:00", 2);
 
-            Models.Task task1 = new Models.Task("Refuel the car", "My mum wants me to refuel her car", "13/11/2023", "Low", false);
-            Models.Task task2 = new Models.Task("Respond to emails", "Respond to my teachers emails", "13/11/2023", "Normal", false);
-            Models.Task task3 = new Models.Task("Buy gift", "Buy gift for Magda's birthday", "13/11/2023", "High", false);
-            Models.Task task4 = new Models.Task("Shopping", "Buy new t-shirt for my boxing lessons","12/11/2023", "Normal", false);
-            Models.Task task5 = new Models.Task("New haircut", "Visit Elegancko BarberShop", "11/11/2023", "High", false);
+            Models.Task task1 = new Models.Task("Refuel the car", "My mum wants me to refuel her car", "13/11/2023", "Low", false, 0);
+            Models.Task task2 = new Models.Task("Respond to emails", "Respond to my teachers emails", "13/11/2023", "Normal", false, 0);
+            Models.Task task3 = new Models.Task("Buy gift", "Buy gift for Magda's birthday", "13/11/2023", "High", false, 0);
 
-            Models.Task task6 = new Models.Task("Refuel the car2", "My mum wants me to refuel her car", "13/11/2023", "Low", false);
-            Models.Task task7 = new Models.Task("Respond to emails2", "Respond to my teachers emails", "13/11/2023", "Normal", false);
-            Models.Task task8 = new Models.Task("Buy gift2", "Buy gift for Magda's birthday", "13/11/2023", "High", false);
-            Models.Task task9 = new Models.Task("Refuel the car3", "My mum wants me to refuel her car", "13/11/2023", "Low", false);
+            Models.Task task4 = new Models.Task("Shopping", "Buy new t-shirt for my boxing lessons", "12/11/2023", "Normal", false, 1);
+            Models.Task task5 = new Models.Task("New haircut", "Visit Elegancko BarberShop", "11/11/2023", "High", false, 1);
+            Models.Task task6 = new Models.Task("Refuel the car2", "My mum wants me to refuel her car", "13/11/2023", "Low", false, 1);
+
+            Models.Task task7 = new Models.Task("Respond to emails2", "Respond to my teachers emails", "13/11/2023", "Normal", false, 2);
+            Models.Task task8 = new Models.Task("Buy gift2", "Buy gift for Magda's birthday", "13/11/2023", "High", false, 2);
+            Models.Task task9 = new Models.Task("Refuel the car3", "My mum wants me to refuel her car", "13/11/2023", "Low", false, 2);
 
             this.tasks.Add(task1);
             this.tasks.Add(task2);
@@ -84,7 +87,8 @@ namespace SharedLibrary.Repositories
             this.meetings.Add(meeting9);
         }
 
-        private void initializePlansComponents() {
+        private void initializePlansComponents()
+        {
             this.kindsOfMeetings.Add("Conference");
             this.kindsOfMeetings.Add("Team Meeting");
             this.kindsOfMeetings.Add("Client Meeting");
@@ -94,10 +98,12 @@ namespace SharedLibrary.Repositories
             this.priorities.Add("High");
         }
 
-        public void addTask(Models.Task task) {
+        public void addTask(Models.Task task)
+        {
             this.tasks.Add(task);
         }
-        public void addMeeting(Meeting meeting) {
+        public void addMeeting(Meeting meeting)
+        {
             this.meetings.Add(meeting);
         }
         public void updateTask(Models.Task task)
@@ -139,6 +145,22 @@ namespace SharedLibrary.Repositories
                 task.TaskDate == formattedDate)
                 .ToList();
         }
+
+        public List<Meeting> getMeetingsById(int userId, DateTime chosenDate)
+        {
+            string formattedDate = chosenDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            return meetings.Where(meeting =>
+                meeting.MeetingDate == formattedDate && meeting.UserId == userId)
+                .ToList();
+        }
+        public List<Models.Task> getTasksById(int userId, DateTime chosenDate)
+        {
+            string formattedDate = chosenDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            return tasks.Where(task =>
+                task.TaskDate == formattedDate && task.UserId == userId)
+                .ToList();
+        }
+
         public Meeting? getMeeting(int planId)
         {
             Meeting? meetingToGet = meetings.FirstOrDefault(meeting => meeting.MeetingId == planId);

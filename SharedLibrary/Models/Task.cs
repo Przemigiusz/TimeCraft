@@ -8,8 +8,10 @@
         private string taskDescription;
         private string taskDate;
         private string taskPriority;
-        private bool isCompleted; 
-        public Task(string taskName, string taskDescription, string taskDate, string taskPriority, bool isCompleted)
+        private bool isCompleted;
+        private int userId;
+
+        public Task(string taskName, string taskDescription, string taskDate, string taskPriority, bool isCompleted, int userId)
         {
             this.taskId = currentTaskId;
             ++currentTaskId;
@@ -18,6 +20,7 @@
             this.taskDate = taskDate;
             this.taskPriority = taskPriority;
             this.isCompleted = isCompleted;
+            this.userId = userId;
         }
         public int TaskId { get { return taskId; } set { taskId = value; } }
         public string TaskName { get { return taskName; } set { taskName = value; } }
@@ -25,5 +28,6 @@
         public string TaskDate { get { return taskDate; } set { taskDate = value; } }
         public string TaskPriority { get { return taskPriority; } set { taskPriority = value; } }
         public bool IsCompleted { get { return isCompleted; } set { isCompleted = value; } }
+        public int UserId { get { return userId; } }
     }
 }

@@ -26,9 +26,9 @@ namespace SharedLibrary.Repositories
 
         private void initializeUsers()
         {
-            User user1 = new User("a", "a", "a@o2.pl", "test1");
-            User user2 = new User("b", "b", "b@o2.pl", "test2");
-            User user3 = new User("c", "c", "c@o2.pl", "test3");
+            User user1 = new User("a", "a", "a@o2.pl", "a");
+            User user2 = new User("b", "b", "b@o2.pl", "b");
+            User user3 = new User("c", "c", "c@o2.pl", "c");
 
             this.users.Add(user1);
             this.users.Add(user2);
@@ -50,6 +50,18 @@ namespace SharedLibrary.Repositories
                 }
             }
             return false;
+        }
+
+        public User? getUser(string email, string password)
+        {
+            foreach (var user in this.users)
+            {
+                if (user.Email == email && user.Password == password)
+                {
+                    return user;
+                }
+            }
+            return null;
         }
 
         public bool emailExists(string email)

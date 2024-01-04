@@ -1,4 +1,5 @@
 ﻿using SharedLibrary.Models;
+using SharedLibrary.Repositories;
 using SharedLibrary.Services;
 using System.Windows.Input;
 using TimeCraft_WPF_App.Core;
@@ -39,6 +40,7 @@ namespace TimeCraft_WPF_App.ViewModels
         private bool shouldValidateRegistrationForm;
 
         private UsersService usersService;
+        private UserSession userSession;
 
         public MainWindowViewModel()
         {
@@ -46,6 +48,7 @@ namespace TimeCraft_WPF_App.ViewModels
             shouldValidateRegistrationForm = false;
 
             usersService = UsersService.Instance;
+            userSession = UserSession.Instance;
 
             CurrentTab = new LoginViewModel();
             ShowHomeViewCommand = new RelayCommand(ExecuteShowHomeView, CanExecuteCommand);
@@ -319,6 +322,9 @@ namespace TimeCraft_WPF_App.ViewModels
             {
                 if (usersService.UsersRepository.userExists(EmailLogin!, PasswordLogin!))
                 {
+                    User? loggedUser = usersService.UsersRepository.getUser(EmailLogin!, PasswordLogin!);
+                    userSession.LoggedUser = loggedUser;
+
                     IsUserLoggedIn = true;
                     IsHomeBtnChecked = true;
                     CurrentTab = new HomeTabViewModel();

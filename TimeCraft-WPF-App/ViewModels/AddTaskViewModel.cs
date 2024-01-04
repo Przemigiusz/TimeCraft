@@ -1,4 +1,5 @@
-﻿using SharedLibrary.Services;
+﻿using SharedLibrary.Repositories;
+using SharedLibrary.Services;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Input;
@@ -16,6 +17,7 @@ namespace TimeCraft_WPF_App.ViewModels
         private ObservableCollection<string> priorities;
 
         private PlansService plansService;
+        private UserSession userSession;
 
         public ICommand AddTaskCommand { get; set; }
 
@@ -26,6 +28,7 @@ namespace TimeCraft_WPF_App.ViewModels
             shouldValidateAddTaskForm = false;
 
             plansService = PlansService.Instance;
+            userSession = UserSession.Instance;
             priorities = new ObservableCollection<string>(plansService.PlansRepository.Priorities);
             AddTaskCommand = new RelayCommand(_ => AddTask(), _ => CanAddTask());
         }
@@ -102,7 +105,7 @@ namespace TimeCraft_WPF_App.ViewModels
             {
                 string formattedDate = SelectedDate!.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
-                SharedLibrary.Models.Task newTask = new SharedLibrary.Models.Task(Name!, Description!, formattedDate, SelectedPriority!, false);
+                SharedLibrary.Models.Task newTask = new SharedLibrary.Models.Task(Name!, Description!, formattedDate, SelectedPriority!, false, userSession.LoggedUser!.Id);
                 plansService.PlansRepository.addTask(newTask);
 
                 shouldValidateAddTaskForm = false;

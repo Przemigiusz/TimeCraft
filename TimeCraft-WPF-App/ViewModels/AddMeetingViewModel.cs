@@ -1,4 +1,5 @@
 ﻿using SharedLibrary.Models;
+using SharedLibrary.Repositories;
 using SharedLibrary.Services;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -18,6 +19,7 @@ namespace TimeCraft_WPF_App.ViewModels
         private ObservableCollection<string> kindsOfMeetings;
 
         private PlansService plansService;
+        private UserSession userSession;
 
         public ICommand AddMeetingCommand { get; set; }
 
@@ -28,6 +30,7 @@ namespace TimeCraft_WPF_App.ViewModels
             shouldValidateAddMeetingForm = false;
 
             plansService = PlansService.Instance;
+            userSession = UserSession.Instance;
             kindsOfMeetings = new ObservableCollection<string>(plansService.PlansRepository.KindsOfMeetings);
             AddMeetingCommand = new RelayCommand(_ => AddMeeting(), _ => CanAddMeeting());
         }
@@ -119,7 +122,7 @@ namespace TimeCraft_WPF_App.ViewModels
                 string formattedStartTime = StartTime!.Value.ToString("HH:mm", CultureInfo.InvariantCulture);
                 string formattedEndTime = EndTime!.Value.ToString("HH:mm", CultureInfo.InvariantCulture);
 
-                Meeting newMeeting = new Meeting(SelectedType!, Topic!, formattedDate, formattedStartTime, formattedEndTime);
+                Meeting newMeeting = new Meeting(SelectedType!, Topic!, formattedDate, formattedStartTime, formattedEndTime, userSession.LoggedUser!.Id);
                 plansService.PlansRepository.addMeeting(newMeeting);
 
                 shouldValidateAddMeetingForm = false;

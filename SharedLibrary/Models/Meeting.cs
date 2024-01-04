@@ -13,8 +13,9 @@ namespace SharedLibrary.Models
         private string meetingEndTime;
         private DateTime meetingStartTimeDate;
         private DateTime meetingEndTimeDate;
+        private int userId;
 
-        public Meeting(string kindOfMeeting, string topic, string meetingDate, string meetingStartTime, string meetingEndTime)
+        public Meeting(string kindOfMeeting, string topic, string meetingDate, string meetingStartTime, string meetingEndTime, int userId)
         {
             this.meetingId = currentMeetingId;
             ++currentMeetingId;
@@ -23,6 +24,7 @@ namespace SharedLibrary.Models
             this.meetingDate = meetingDate;
             this.meetingStartTime = meetingStartTime;
             this.meetingEndTime = meetingEndTime;
+            this.userId = userId;
 
             if (DateTime.TryParseExact($"{meetingDate} {meetingStartTime}", "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDateTime))
             {
@@ -37,9 +39,10 @@ namespace SharedLibrary.Models
         public int MeetingId { get { return meetingId; } set { meetingId = value; } }
         public string KindOfMeeting { get { return kindOfMeeting; } set { kindOfMeeting = value; } }
         public string Topic { get { return topic; } set { topic = value; } }
-        public string MeetingDate { get {  return meetingDate; } set { meetingDate = value; } }
-        public string MeetingStartTime { get {  return meetingStartTime; } set { meetingStartTime = value; } }
-        public string MeetingEndTime { get {  return meetingEndTime; } set { meetingEndTime = value; } }
+        public string MeetingDate { get { return meetingDate; } set { meetingDate = value; } }
+        public string MeetingStartTime { get { return meetingStartTime; } set { meetingStartTime = value; } }
+        public string MeetingEndTime { get { return meetingEndTime; } set { meetingEndTime = value; } }
+        public int UserId { get { return userId; } }
         public DateTime MeetingStartTimeDate
         {
             get { return meetingStartTimeDate; }

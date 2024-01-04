@@ -1,4 +1,5 @@
 ﻿using SharedLibrary.Models;
+using SharedLibrary.Repositories;
 using SharedLibrary.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -18,6 +19,7 @@ namespace TimeCraft_WPF_App.ViewModels
         private ObservableCollection<string> priorities;
 
         private PlansService plansService;
+        private UserSession userSession;
 
         private ICollectionView? meetingsView;
         private ICollectionView? tasksView;
@@ -47,6 +49,8 @@ namespace TimeCraft_WPF_App.ViewModels
         public PlansViewModel()
         {
             plansService = PlansService.Instance;
+            userSession = UserSession.Instance;
+
             IsDialogOpen = false;
 
             SaveActivityToDeleteCommand = new RelayCommand(SaveActivityToDeleteCommandExecute, CanSaveActivityToDeleteCommandExecute);
@@ -175,8 +179,8 @@ namespace TimeCraft_WPF_App.ViewModels
 
         private void LoadPlans()
         {
-            Meetings = new ObservableCollection<Meeting>(PlansService.Instance.PlansRepository.getMeetings(SelectedDate));
-            Tasks = new ObservableCollection<SharedLibrary.Models.Task>(PlansService.Instance.PlansRepository.getTasks(SelectedDate));
+            Meetings = new ObservableCollection<Meeting>(PlansService.Instance.PlansRepository.getMeetingsById(userSession.LoggedUser!.Id, SelectedDate));
+            Tasks = new ObservableCollection<SharedLibrary.Models.Task>(PlansService.Instance.PlansRepository.getTasksById(userSession.LoggedUser!.Id, SelectedDate));
 
             meetingsView = CollectionViewSource.GetDefaultView(Meetings);
             tasksView = CollectionViewSource.GetDefaultView(Tasks);
