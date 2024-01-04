@@ -105,8 +105,14 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" Background="{StaticResource PrimaryBackgroundColor}">
-                    <Image Source="../Images/TimeCraftArt.png" Stretch="Uniform"/>
+                <Border Grid.Column="0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="{StaticResource PrimaryGradientColor}" Offset="0"/>
+                            <GradientStop Color="{StaticResource SecondaryGradientColor}" Offset="0.6"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Image Source="../Images/TimeCraft.png" Stretch="Uniform"/>
                 </Border>
                 <Border Grid.Column="1" Background="{StaticResource PrimaryBackgroundColor}">
                     <TabControl SelectedIndex="{Binding SelectedTabIndex}">
