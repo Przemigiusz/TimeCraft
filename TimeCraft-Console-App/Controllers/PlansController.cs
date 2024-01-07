@@ -165,7 +165,7 @@ namespace TimeCraft_Console_App.Controllers
             CNavigationResult result;
             while (true)
             {
-                result = this.calendarView.displayCalendar(calendarService.getMonths(), calendarService.getDayAbbreviations(), plansService.PlansRepository.Meetings, plansService.PlansRepository.Tasks);
+                result = this.calendarView.displayCalendar(calendarService.getMonths(), calendarService.getDayAbbreviations(), plansService.PlansRepository.getAllMeetingsById(userSession.LoggedUser!.Id), plansService.PlansRepository.getAllTasksById(userSession.LoggedUser!.Id));
                 switch (result.Code)
                 {
                     case Codes.WTDMenuCTDAddPlans:

@@ -173,6 +173,17 @@ namespace SharedLibrary.Repositories
                 .ToList();
         }
 
+        public List<Meeting> getAllMeetingsById(int userId)
+        {
+            return meetings.Where(meeting => meeting.UserId == userId)
+                .ToList();
+        }
+        public List<Models.Task> getAllTasksById(int userId)
+        {
+            return tasks.Where(task => task.UserId == userId)
+                .ToList();
+        }
+
         public Meeting? getMeeting(int planId)
         {
             Meeting? meetingToGet = meetings.FirstOrDefault(meeting => meeting.MeetingId == planId);
