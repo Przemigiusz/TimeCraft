@@ -5,10 +5,10 @@ namespace TimeCraft_Console_App.Views
 {
     internal class AddPlansView
     {
-        public IPlan displayNewPlanForm(DateTime chosenDate) {
+        public IPlan displayNewPlanForm(DateTime chosenDate, List<string> kindsOfMeetings, List<string> priorities) {
             Console.Clear();
             NewPlanForm newPlanForm = new NewPlanForm();
-            IPlan newPlan = newPlanForm.render(chosenDate);
+            IPlan newPlan = newPlanForm.render(chosenDate, kindsOfMeetings, priorities);
             Console.Clear();
             return newPlan;
         }

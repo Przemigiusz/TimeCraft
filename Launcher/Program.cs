@@ -39,7 +39,7 @@ class Program
         {
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
-                FileName = "C:\\Users\\rutko\\Desktop\\Studia\\KCK\\Projekt\\TimeCraft\\TimeCraft-Console-App\\bin\\Release\\net8.0-windows\\TimeCraft-Console-App.exe",
+                FileName = "C:\\Users\\rutko\\Desktop\\Studia\\KCK\\Projekt_1_2\\TimeCraft\\TimeCraft-Console-App\\bin\\Release\\net8.0-windows\\TimeCraft-Console-App.exe",
                 UseShellExecute = false
             };
 
@@ -62,7 +62,7 @@ class Program
         {
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
-                FileName = "C:\\Users\\rutko\\Desktop\\Studia\\KCK\\Projekt\\TimeCraft\\TimeCraft-WPF-App\\bin\\Release\\net8.0-windows\\TimeCraft-WPF-App.exe",
+                FileName = "C:\\Users\\rutko\\Desktop\\Studia\\KCK\\Projekt_1_2\\TimeCraft\\TimeCraft-WPF-App\\bin\\Release\\net8.0-windows\\TimeCraft-WPF-App.exe",
                 UseShellExecute = false
             };
 

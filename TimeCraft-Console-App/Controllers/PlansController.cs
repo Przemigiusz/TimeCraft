@@ -181,7 +181,7 @@ namespace TimeCraft_Console_App.Controllers
         }
         private void displayAddPlansForm(DateTime chosenDate)
         {
-            IPlan result = this.addPlansView.displayNewPlanForm(chosenDate);
+            IPlan result = this.addPlansView.displayNewPlanForm(chosenDate, plansService.PlansRepository.KindsOfMeetings, plansService.PlansRepository.Priorities);
             if (result is Meeting)
             {
                 Meeting newMeeting = (Meeting)result;
@@ -264,7 +264,7 @@ namespace TimeCraft_Console_App.Controllers
             {
                 plan = this.plansService.PlansRepository.getTask(planId);
             }
-            return this.editPlanView.displayEditPlanForm(plan);
+            return this.editPlanView.displayEditPlanForm(plan, plansService.PlansRepository.KindsOfMeetings, plansService.PlansRepository.Priorities);
         }
     }
 }

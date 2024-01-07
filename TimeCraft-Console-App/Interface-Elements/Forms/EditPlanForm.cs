@@ -9,7 +9,7 @@ namespace TimeCraft_Console_App.Interface_Elements.Forms
         private List<FormField>? formFields;
         private int columnWidth = 47;
 
-        public IPlan? render(IPlan? plan)
+        public IPlan? render(IPlan? plan, List<string> kindsOfMeetings, List<string> priorities)
         {
             int i = 1;
             if (plan != null)

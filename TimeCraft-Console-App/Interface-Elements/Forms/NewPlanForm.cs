@@ -9,7 +9,7 @@ namespace TimeCraft_Console_App.Interface_Elements
     {
         private List<FormField>? formFields;
 
-        public IPlan render(DateTime chosenDate)
+        public IPlan render(DateTime chosenDate, List<string> kindsOfMeetings, List<string> priorities)
         {
             SelectField meetingOrTaskSelect = new SelectField("Do you want to add a meeting or a task to do?", new List<SelectOption> { new SelectOption("Meeting"), new SelectOption("Task") });
             meetingOrTaskSelect.render();
@@ -17,9 +17,15 @@ namespace TimeCraft_Console_App.Interface_Elements
 
             if (decision == "Meeting")
             {
+                List<SelectOption> kindsOfMeetingsOptions = new List<SelectOption>();
+                foreach (var kind in kindsOfMeetings)
+                {
+                    kindsOfMeetingsOptions.Add(new SelectOption(kind));
+                }
+
                 formFields = new List<FormField>
                 {
-                    new SelectField("What kind of meeting is it?", new List<SelectOption> { new SelectOption("Conference"), new SelectOption("Team Meeting"), new SelectOption("Client Meeting") }),
+                    new SelectField("What kind of meeting is it?", kindsOfMeetingsOptions),
                     new TextField("What is the topic of this meeting?"),
                     new TimeField("What time the meeting starts? [[Press Escape to confirm]]"),
                     new TimeField("What time the meeting ends? [[Press Escape to confirm]]"),
@@ -27,9 +33,15 @@ namespace TimeCraft_Console_App.Interface_Elements
             }
             else
             {
+                List<SelectOption> prioritiesOptions = new List<SelectOption>();
+                foreach (var priority in priorities)
+                {
+                    prioritiesOptions.Add(new SelectOption(priority));
+                }
+
                 formFields = new List<FormField>
                 {
-                    new SelectField("Priority", new List<SelectOption> { new SelectOption("Low"), new SelectOption("Normal"), new SelectOption("High") }),
+                    new SelectField("Priority", prioritiesOptions),
                     new TextField("Title"),
                     new TextAreaField("Description")
                 };
